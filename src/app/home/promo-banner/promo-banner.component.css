@@ -1,0 +1,51 @@
+.promo-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a1a1a;
+  color: white;
+  padding: 15px 20px;
+  font-size: 14px;
+}
+
+.left-section {
+  display: flex;
+  gap: 10px;
+
+  select {
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    option {
+      background-color: #1a1a1a;
+    }
+  }
+}
+
+.center-section {
+  font-weight: bold;
+}
+
+.right-section {
+  display: flex;
+  gap: 15px;
+
+  .social-icon {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .promo-banner {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

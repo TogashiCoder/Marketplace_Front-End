@@ -1,0 +1,28 @@
+{
+  "wishlist": [
+    {
+      "id": "2",
+      "name": "Amazon Essentials Women's Tank",
+      "description": "Sit at ipsum amet clita no est, sed amet sadipscing et gubergren",
+      "price": 75,
+      "inStock": true,
+      "imageUrl": "https://via.placeholder.com/150"
+    },
+    {
+      "id": "3",
+      "name": "Amazon Brand - Daily Ritual Women's Jersey",
+      "description": "Erat amet et et amet diam et et. Justo amet at dolore",
+      "price": 62,
+      "inStock": false,
+      "imageUrl": "https://via.placeholder.com/150"
+    },
+    {
+      "id": "6",
+      "name": "Fossil Women's Riley Stainless Steel Quartz Watch",
+      "description": "Elegant watch with mineral crystal dial window.",
+      "price": 99,
+      "inStock": false,
+      "imageUrl": "https://via.placeholder.com/150"
+    }
+  ]
+}

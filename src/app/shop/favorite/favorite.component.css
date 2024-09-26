@@ -1,0 +1,140 @@
+/* Container styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Breadcrumb styles */
+.breadcrumb {
+  margin-bottom: 2rem;
+}
+
+.breadcrumb ol {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb li {
+  font-size: 0.875rem;
+  color: #4a5568;
+}
+
+.breadcrumb li:not(:last-child)::after {
+  content: '/';
+  margin: 0 0.5rem;
+  color: #718096;
+}
+
+.breadcrumb a {
+  color: #319795;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+/* Table styles */
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+th, td {
+  padding: 0.75rem 1.5rem;
+  text-align: left;
+}
+
+th {
+  background-color: #f7fafc;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #4a5568;
+}
+
+tr {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+tr:hover {
+  background-color: #f7fafc;
+}
+
+/* Product styles */
+.product-info {
+  display: flex;
+  align-items: center;
+}
+
+.product-image {
+  width: 4rem;
+  height: 4rem;
+  background-color: #e6fffa;
+  margin-right: 1rem;
+}
+
+.product-name {
+  font-weight: 500;
+  color: #319795;
+}
+
+.product-description {
+  font-size: 0.75rem;
+  color: #718096;
+}
+
+/* Stock status styles */
+.in-stock {
+  color: #48bb78;
+}
+
+.out-of-stock {
+  color: #e53e3e;
+}
+
+/* Button styles */
+.primary-button, .secondary-button {
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.primary-button {
+  background-color: #319795;
+  color: white;
+}
+
+.primary-button:hover {
+  background-color: #2c7a7b;
+}
+
+.secondary-button {
+  background-color: #718096;
+  color: white;
+}
+
+.secondary-button:hover {
+  background-color: #4a5568;
+}
+
+.remove-button {
+  background: none;
+  border: none;
+  color: #718096;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  color: #e53e3e;
+}

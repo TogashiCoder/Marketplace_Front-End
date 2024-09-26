@@ -1,0 +1,49 @@
+<div class="container">
+
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Stock Status</th>
+          <th>Action</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of wishlistItems">
+          <td>
+            <div class="product-info">
+              <div class="product-image"></div>
+              <div>
+                <div class="product-name">{{ item.name }}</div>
+                <div class="product-description">{{ item.description }}</div>
+              </div>
+            </div>
+          </td>
+          <td>{{ item.price | currency }}</td>
+          <td>
+            <span [class.in-stock]="item.inStock" [class.out-of-stock]="!item.inStock">
+              {{ item.inStock ? 'In Stock' : 'Out of stock' }}
+            </span>
+          </td>
+          <td>
+            <button
+              [class.primary-button]="item.inStock"
+              [class.secondary-button]="!item.inStock"
+              (click)="onActionClick(item)">
+              {{ item.inStock ? 'Add to cart' : 'Contact Us' }}
+            </button>
+          </td>
+          <td>
+            <button class="remove-button" (click)="removeItem(item.id)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

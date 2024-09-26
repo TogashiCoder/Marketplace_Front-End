@@ -1,0 +1,254 @@
+body {
+  background-color: #f7fafc;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.search-filter {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  .search-input,
+  .category-select {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    transition: border-color 0.2s ease-in-out;
+
+    &:focus {
+      outline: none;
+      border-color: #319795;
+    }
+  }
+}
+
+.product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.product-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+    background-color: #f7fafc;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    background-color: #e6fffa;
+  }
+
+  .product-info {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-name {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #319795;
+  }
+
+  .product-description {
+    font-size: 0.875rem;
+    color: #718096;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+  }
+
+  .product-price-rating {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .product-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #4a5568;
+  }
+
+  .product-rating {
+    .star {
+      color: #319795;
+    }
+  }
+}
+
+.primary-button, .secondary-button {
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.primary-button {
+  background-color: #319795;
+  color: white;
+
+  &:hover {
+    background-color: #2c7a7b;
+  }
+}
+
+.secondary-button {
+  background-color: #718096;
+  color: white;
+
+  &:hover {
+    background-color: #4a5568;
+  }
+}
+
+.remove-button {
+  background: none;
+  border: none;
+  color: #718096;
+  cursor: pointer;
+
+  &:hover {
+    color: #e53e3e;
+  }
+}
+
+@media (min-width: 768px) {
+  .product-card {
+    flex-direction: row;
+    align-items: stretch;
+
+    .product-image {
+      width: 300px;
+      height: auto;
+    }
+
+    .product-info {
+      width: calc(100% - 300px);
+    }
+  }
+}
+
+/* Icons styles */
+.icon-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 1.5rem;
+}
+
+.favorite-icon, .details-icon {
+  color: #718096;
+  cursor: pointer;
+
+  &:hover {
+    color: #4a5568;
+  }
+}
+
+.product-card {
+  position: relative;
+}
+
+.add-to-cart-btn {
+  margin-top: 1rem;
+  width: 100%;
+  text-align: center;
+}
+
+/* Pagination styles */
+.pagination-controls {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+
+  .ngx-pagination {
+    display: flex;
+    list-style-type: none;
+    gap: 0.5rem;
+    padding: 0;
+  }
+
+  .ngx-pagination li {
+    padding: 0.75rem 1.25rem;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    font-weight: 500;
+    color: #4a5568;
+
+    &:hover {
+      background-color: #edf2f7;
+    }
+
+    &.current {
+      background-color: #319795;
+      color: #ffffff;
+      border-color: #319795;
+    }
+  }
+
+  .ngx-pagination .disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-card {
+    flex-direction: column;
+    .product-image {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+
+.product-rating {
+  display: flex;
+  gap: 0.25rem; /* Adjust spacing between stars */
+
+  .fa-star {
+    color: #e2e8f0; /* Empty star color (light gray) */
+    font-size: 1.25rem; /* Adjust the size of the stars */
+  }
+
+  .fa-star.filled {
+    color: #319795; /* Filled star color (your chosen primary color) */
+  }
+
+  .fa-star:hover {
+    color: #2c7a7b; /* Darker color on hover */
+  }
+}

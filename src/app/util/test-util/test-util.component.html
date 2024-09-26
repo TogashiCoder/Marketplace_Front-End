@@ -1,0 +1,9 @@
+<h1>Welcome to our Marketplace</h1>
+    <button (click)="onFollowShop()">Follow Shop</button>
+
+    <app-registration-prompt
+      [show]="showPrompt"
+      [message]="'Please register to follow shops!'"
+      (register)="onRegister()"
+      (close)="onClosePrompt()">
+    </app-registration-prompt>

@@ -1,0 +1,77 @@
+<div class="product-container">
+  <div class="container">
+      <div class="product-main">
+          <h2 class="title">New Products</h2>
+          <div class="product-box">
+              <div class="product-grid">
+
+                <ng-container *ngFor="let product of products">
+
+                  <!-- style 1  WITH remosie-->
+                  <div class="showcase">
+                    <div class="showcase-banner">
+                      <ng-container *ngFor="let image of product.imageUrls; let i = index">
+                        <img
+                          [src]="image"
+                          [ngClass]="i === 0 ? 'product-img default' : 'product-img hover'"
+                          width="300">
+                      </ng-container>
+
+                      <!-- discount -->
+                      <p class="showcase-badge">15%</p>
+
+
+                      <!-- functions on product -->
+                      <div class="showcase-actions">
+                        <button class="btn-action">
+                                  <ion-icon name="heart-outline"></ion-icon>
+                              </button>
+                              <button class="btn-action">
+                                  <ion-icon name="eye-outline"></ion-icon>
+                              </button>
+                              <button class="btn-action">
+                                  <ion-icon name="repeat-outline"></ion-icon>
+                              </button>
+                              <button class="btn-action">
+                                  <ion-icon name="bag-add-outline"></ion-icon>
+                              </button>
+                          </div>
+                      </div>
+
+
+
+                      <!-- category -->
+                      <div class="showcase-content">
+                          <a href="#" class="showcase-category">jacket</a>
+                          <a href="#">
+                              <h3 class="showcase-title">Mens Winter Leathers Jackets</h3>
+                          </a>
+
+
+
+                          <!-- rating -->
+                          <div class="showcase-rating">
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star-outline"></ion-icon>
+                              <ion-icon name="star-outline"></ion-icon>
+                          </div>
+                          <!-- Price  -->
+                          <div class="price-box">
+                            <!-- after discount -->
+                              <p class="price">$48.00</p>
+                              <!-- before discount -->
+                              <del>$75.00</del>
+                          </div>
+                      </div>
+                  </div>
+
+
+
+                </ng-container>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

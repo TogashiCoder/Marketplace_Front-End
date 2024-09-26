@@ -1,0 +1,247 @@
+/* Container styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: Arial, sans-serif;
+}
+
+/* Card styles */
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-header {
+  background: #319795;
+  color: white;
+  padding: 1rem;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.icon {
+  margin-right: 0.5rem;
+}
+
+.card-content {
+  padding: 0;
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.75rem 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  background-color: #f7fafc;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #4a5568;
+}
+
+tr:hover {
+  background-color: #f7fafc;
+}
+
+.image-column {
+  width: 100px;
+}
+
+.remove-column {
+  width: 50px;
+}
+
+/* Product styles */
+.product-image {
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #e6fffa;
+}
+
+.product-name {
+  font-weight: 500;
+  color: #319795;
+}
+
+/* Quantity control styles */
+.quantity-control {
+  display: flex;
+  align-items: center;
+}
+
+.icon-button {
+  background: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button:hover {
+  background-color: #f7fafc;
+}
+
+.quantity-input {
+  width: 50px;
+  text-align: center;
+  margin: 0 0.5rem;
+  padding: 0.25rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+/* Coupon control styles */
+.coupon-control {
+  display: flex;
+  align-items: center;
+  background-color: #f7fafc;
+  border-radius: 4px;
+  padding: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.coupon-control:hover {
+  background-color: #e6fffa;
+}
+
+.coupon-input {
+  width: 150px;
+  text-align: left;
+  margin: 0;
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px 0 0 4px;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.coupon-input:focus {
+  outline: none;
+  border-color: #319795;
+  box-shadow: 0 0 0 3px rgba(49, 151, 149, 0.1);
+}
+
+.apply-button {
+  background-color: #319795;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.apply-button:hover {
+  background-color: #2c7a7b;
+}
+
+/* Price and remove button styles */
+.total-price {
+  font-weight: 600;
+}
+
+.remove-button {
+  background: none;
+  border: none;
+  color: #718096;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  color: #e53e3e;
+}
+
+/* Card footer styles */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem;
+  background-color: #f7fafc;
+}
+
+.update-cart-button {
+  display: flex;
+  align-items: center;
+  background-color: #718096;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.update-cart-button:hover {
+  background-color: #4a5568;
+}
+
+/* Cart totals styles */
+.cart-totals {
+  width: 250px;
+}
+
+.cart-totals h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #4a5568;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.subtotal, .total {
+  font-weight: 600;
+}
+
+.total {
+  font-size: 1.25rem;
+}
+
+/* Checkout button styles */
+.checkout-button {
+  width: 100%;
+  background-color: #319795;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.checkout-button:hover {
+  background-color: #2c7a7b;
+}

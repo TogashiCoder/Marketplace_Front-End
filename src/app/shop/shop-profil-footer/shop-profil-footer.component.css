@@ -1,0 +1,37 @@
+.shop-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.stat-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 16px;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.stat-card:hover {
+  background-color: #f7fafc;
+}
+
+.stat-icon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 8px;
+  color: #319795;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0;
+  color: #319795;
+}
+
+.stat-label {
+  color: #718096;
+  margin: 4px 0 0;
+}

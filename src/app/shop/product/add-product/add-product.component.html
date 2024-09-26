@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="form-container">
+    <div class="form-card">
+      <div class="form-header">
+        <h2>Add New Product</h2>
+        <p>Fill in the details to add a new product to your Shop</p>
+      </div>
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-content">
+        <div class="form-group">
+          <label for="name">Product Name</label>
+          <input id="name" formControlName="name" type="text" placeholder="Enter product name" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" formControlName="description" placeholder="Describe your product" rows="4" required></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="price">Price</label>
+            <input id="price" formControlName="price" type="number" min="0" step="0.01" placeholder="0.00" required>
+          </div>
+          <div class="form-group">
+            <label for="minimumOrderQuantity">Min Order Qty</label>
+            <input id="minimumOrderQuantity" formControlName="minimumOrderQuantity" type="number" min="1" placeholder="1" required>
+          </div>
+          <div class="form-group">
+            <label for="stockQuantity">Stock Quantity</label>
+            <input id="stockQuantity" formControlName="stockQuantity" type="number" min="0" placeholder="0" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="categoryId">Category</label>
+          <select id="categoryId" formControlName="categoryId" required>
+            <option value="" disabled selected>Select a category</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="images">Images (required)</label>
+          <div class="file-input-wrapper">
+            <input id="images" type="file" accept="image/*" multiple (change)="onFileChange($event, 'images')" required>
+            <span class="file-input-button">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              Choose Images
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="videos">Videos (optional)</label>
+          <div class="file-input-wrapper">
+            <input id="videos" type="file" accept="video/*" multiple (change)="onFileChange($event, 'videos')">
+            <span class="file-input-button">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              Choose Videos
+            </span>
+          </div>
+        </div>
+        <button type="submit" [disabled]="productForm.invalid || isLoading" class="submit-button">
+          <span *ngIf="isLoading" class="loader"></span>
+          {{ isLoading ? 'Adding Product...' : 'Add Product' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="promo-banner">
+  <div class="left-section">
+    <select [(ngModel)]="selectedLanguage" (change)="onLanguageChange(selectedLanguage)">
+      <option *ngFor="let lang of languages" [value]="lang">{{ lang }}</option>
+    </select>
+    <select [(ngModel)]="selectedCurrency" (change)="onCurrencyChange(selectedCurrency)">
+      <option *ngFor="let curr of currencies" [value]="curr">{{ curr }}</option>
+    </select>
+  </div>
+  <div class="center-section">
+    NEW CUSTOMERS SAVE 10% WITH THE CODE GET10
+  </div>
+  <div class="right-section">
+    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+    <a href="#" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
+  </div>
+</div>

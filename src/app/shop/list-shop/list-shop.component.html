@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="search-filter">
+    <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterProducts()" placeholder="Search products..." class="search-input">
+    <select [(ngModel)]="selectedCategory" (ngModelChange)="filterProducts()" class="category-select">
+      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+    </select>
+  </div>
+
+  <div class="product-list">
+    <div *ngFor="let product of filteredProducts | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" class="product-card">
+      <!-- <img [src]="product.image" [alt]="product.name" class="product-image"> -->
+      <img src="assets/home/images/products/jacket-5.jpg" [alt]="product.name" class="product-image">
+      <div class="product-info">
+        <h3 style="font-weight: bolder;">{{ product.category }}</h3>
+        <h2 class="product-name">{{ product.name }}</h2>
+        <p class="product-description">{{ product.description }}</p>
+        <div class="product-price-rating">
+          <span class="product-price">{{ product.price | currency }}</span>
+          <div class="product-rating">
+            <i class="fas fa-star" *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{'filled': star <= product.rating}"></i>
+          </div>
+        </div>
+        <button class="primary-button add-to-cart-btn">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination controls -->
+   <div style="margin-top: 40px;">
+     <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+   </div>
+</div>

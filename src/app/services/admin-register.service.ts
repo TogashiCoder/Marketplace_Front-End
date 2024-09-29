@@ -3,14 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
-
-
 @Injectable({
   providedIn: 'root'
 })
-export class SellerRegisterService {
-
-  private readonly API_URL = 'http://localhost:8080/api/sellers';
+export class AdminRegisterService {
+  private readonly API_URL = 'http://localhost:8080/api/admins';
 
 
   constructor(
@@ -18,11 +15,8 @@ export class SellerRegisterService {
   ) { }
 
 
-
-  registerSeller(formData: FormData): Observable<any> {
+  registerAdmin(formData: FormData): Observable<any> {
     return this.http.post(`${this.API_URL}/register`, formData);
   }
-
-
 
 }

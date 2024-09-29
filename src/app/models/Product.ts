@@ -1,19 +1,20 @@
-export interface Product {
-  id?: number;
+
+export interface Product{
+  id: number;
   name: string;
   description: string;
   price: number;
   stockQuantity: number;
   minimumOrderQuantity: number;
+  discountPercentage: number | null | undefined;
+  rating: number | null | undefined;
   sellerId: number;
-  imageUrls?: string[];
-  videoUrls?: string[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  imageUrls: string[];
+  videoUrls: string[];
+  createdAt: string;
+  updatedAt: string | null;
   categoryId: number;
-  rating?: number;
-  discountPercentage?: number;
+  categoryName: string;
 }
-
 
 

@@ -1,0 +1,9 @@
+<div class="form-container">
+  <h2>Reset Password</h2>
+  <input [(ngModel)]="newPassword" placeholder="New Password" type="password">
+  <input [(ngModel)]="confirmPassword" placeholder="Confirm Password" type="password">
+  <button (click)="resetPassword()" [disabled]="isLoading || !newPassword || !confirmPassword || newPassword !== confirmPassword">
+    {{ isLoading ? 'Resetting...' : 'Reset Password' }}
+  </button>
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+</div>

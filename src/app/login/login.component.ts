@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent  implements OnInit{
 
   loginError: string | null = null;
   loginForm: FormGroup;
@@ -25,6 +25,9 @@ export class LoginComponent {
       username: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(3)]],
     });
+  }
+  ngOnInit(): void {
+    this.authService.logout();
   }
 
   togglePasswordVisibility() {
@@ -52,7 +55,5 @@ export class LoginComponent {
     }
   }
 
-  signUpAs(role: string) {
-    console.log('Sign up as:', role);
-  }
+
 }

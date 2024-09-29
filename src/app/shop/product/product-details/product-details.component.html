@@ -1,133 +1,88 @@
-
-<!--
-  This component represents a detailed product page in a responsive grid layout.
-
-  - The navigation bar provides breadcrumb-style links to allow users to navigate between pages, such as Home and Products.
-
-  - The media section (left column) conditionally renders either an image or video based on user selection. If the selected media is a video, it is displayed inside a video tag. Otherwise, an image is displayed with a zoom-in effect on hover.
-
-    * The ng-container directive is used to check if the selected media is a video. If it's not a video, the ng-template is used to render the image.
-
-    * A list of thumbnail buttons below the media section allows users to toggle between different images and videos associated with the product.
-
-  - The product information section (right column) displays details about the product:
-
-    * Product name, price, and rating are displayed prominently at the top.
-
-    * The product description and other relevant details (such as stock quantity, discount, category ID, seller ID) are provided as a list.
-
-    * Creation and last updated timestamps are shown in a smaller font for reference.
-
-    * Action buttons ("Add to Cart" and "Add to Wishlist") provide functionality for users to interact with the product.
--->
-
-
-
-<div class="max-w-7xl mx-auto px-4 py-8">
-  <!-- Breadcrumb Navigation -->
-  <nav class="mb-8">
-    <ol class="list-none p-0 flex items-center text-sm font-medium text-gray-500">
-      <li class="hover:text-teal-600 transition-colors duration-200">
-        <a href="#" class="text-teal-600">Home</a>
-      </li>
-      <li class="mx-2">/</li>
-      <li class="hover:text-teal-600 transition-colors duration-200">
-        <a href="#">Products</a>
-      </li>
-    </ol>
-  </nav>
-
-  <!-- Main Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
-    <!-- Media Section -->
-    <div class="space-y-6">
-      <div class="overflow-hidden rounded-lg shadow-lg border border-gray-200">
-        <div class="p-0 bg-white">
-          <!-- Video Content -->
-          <ng-container *ngIf="selectedMedia.startsWith('video'); else imageContent">
-            <video controls class="w-full h-auto rounded-t-lg">
-              <source [src]="product.videoUrls[getMediaIndex(selectedMedia)]" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </ng-container>
-
-          <!-- Image Content -->
-          <ng-template #imageContent>
-            <div class="relative aspect-square overflow-hidden group cursor-pointer">
-              <img
-                [src]="product.imageUrls[getMediaIndex(selectedMedia)]"
-                [alt]="'Product Image ' + (getMediaIndex(selectedMedia) + 1)"
-                class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
-              />
-            </div>
-          </ng-template>
-        </div>
+<div class="product-details" style="margin-top: 20px;">
+  <div class="product-grid">
+    <div class="media-section">
+      <div class="main-media" [ngClass]="{'zoomed': isZoomed}" (click)="toggleZoom()">
+        <ng-container *ngIf="isVideo(selectedMediaIndex); else imageContent">
+          <video [src]="getAllMedia()[selectedMediaIndex]" controls></video>
+        </ng-container>
+        <ng-template #imageContent>
+          <img [src]="getAllMedia()[selectedMediaIndex]" [alt]="'Product Image ' + (selectedMediaIndex + 1)">
+        </ng-template>
       </div>
 
-      <!-- Media Thumbnails -->
-      <div class="flex space-x-3 overflow-x-auto pb-2">
-        <button
-          *ngFor="let image of product.imageUrls; let i = index"
-          (click)="handleMediaChange('image' + i)"
-          [ngClass]="{'ring-2 ring-teal-600': selectedMedia === 'image' + i}"
-          class="flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border border-gray-300 hover:border-teal-600 transition-all duration-200"
-        >
-          <img [src]="image" [alt]="'Product Image ' + (i + 1)" class="object-cover w-full h-full" />
-        </button>
-        <button
-          *ngFor="let video of product.videoUrls; let i = index"
-          (click)="handleMediaChange('video' + i)"
-          [ngClass]="{'ring-2 ring-teal-600': selectedMedia === 'video' + i}"
-          class="flex-shrink-0 w-20 h-20 rounded-md bg-teal-50 border border-gray-300 hover:border-teal-600 flex items-center justify-center transition-all duration-200"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+      <div class="media-thumbnails">
+        <button *ngFor="let media of getAllMedia(); let i = index"
+                (click)="handleMediaChange(i)"
+                [ngClass]="{'active': selectedMediaIndex === i}">
+          <ng-container *ngIf="isVideo(i); else imageThumbnail">
+            <div class="video-thumbnail">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+          </ng-container>
+          <ng-template #imageThumbnail>
+            <img [src]="media" [alt]="'Thumbnail ' + (i + 1)">
+          </ng-template>
         </button>
       </div>
     </div>
 
-    <!-- Product Information Section -->
-    <div class="space-y-6">
-      <h3 class="text-4xl font-extrabold text-gray-800  CustomFont" style="margin-bottom: -25px;">Category Name</h3>
-      <h1 class="text-4xl font-extrabold text-gray-800 CustomFont" style="font-size: 30px;">{{ product.name }}</h1>
-      <p class="text-3xl font-semibold text-teal-600 CustomFont" >${{ product.price.toFixed(2) }}</p>
-      <div class="flex items-center space-x-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-yellow-400 stroke-yellow-400" viewBox="0 0 20 20" fill="currentColor" style="margin-top: -12px;">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
-        <h6 class="text-gray-600" style="font-size: 25px;" >{{ product.rating ? (product.rating | number:'1.1-1') : 'No ratings yet' }}</h6>
+    <div class="product-info" style="padding-right: 50px;">
+      <h1>{{ product.name }}</h1>
+      <div class="price-rating">
+        <p style="margin-top: 5px;" class="price">${{ product.price.toFixed(2) }}</p>
+        <div class="rating" *ngIf="product.rating">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          <span>{{ product.rating.toFixed(1) }}</span>
+        </div>
       </div>
-      <p class="text-gray-600 text-lg leading-relaxed CustomFont" style="font-size: 25px;">{{ product.description }}</p>
 
-      <!-- Product Details -->
-      <div class="space-y-2">
-        <h2 class="text-xl font-semibold text-gray-800">Product Details:</h2>
-        <ul class="list-disc list-inside space-y-1 text-gray-600">
-          <li>Stock Quantity:
-            <span [ngClass]="{'text-green-500': product.stockQuantity > 0, 'text-red-500': product.stockQuantity === 0}">
-              {{ product.stockQuantity }}
-            </span>
-          </li>
-          <li>Minimum Order Quantity: {{ product.minimumOrderQuantity }}</li>
+      <p style="margin-top: -3px;" class="description">{{ product.description }}</p>
+
+      <div class="product-details-card">
+        <h2>Product Details</h2>
+        <ul>
+          <li>Stock: <span [ngClass]="{'in-stock': product.stockQuantity > 0, 'out-of-stock': product.stockQuantity === 0}">
+            {{ product.stockQuantity }}
+          </span></li>
+          <li>Minimum Order: {{ product.minimumOrderQuantity }}</li>
           <li *ngIf="product.discountPercentage">Discount: {{ product.discountPercentage }}%</li>
-          <li>Category ID: {{ product.categoryId }}</li>
-          <li>Seller ID: {{ product.sellerId }}</li>
+          <li>Category: {{ product.categoryName }}</li>
         </ul>
+        <div class="timestamps" style="margin-top: 5px; margin-bottom: -20px;">
+          <p>Created: {{ product.createdAt | date:'shortDate' }}</p>
+          <p *ngIf="product.updatedAt">Updated: {{ product.updatedAt | date:'shortDate' }}</p>
+        </div>
       </div>
 
+      <div class="action-buttons">
+        <button class="add-to-cart">Add to Cart</button>
+        <button class="add-to-wishlist">Add to Wishlist</button>
+      </div>
 
-
-      <!-- Action Buttons -->
-      <div class="flex space-x-4">
-        <button class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded shadow-lg transition-all duration-200 focus:ring-2 focus:ring-teal-300 focus:outline-none">
-          Add to Cart
-        </button>
-        <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded shadow-lg transition-all duration-200 focus:ring-2 focus:ring-gray-400 focus:outline-none">
-          Add to Wishlist
-        </button>
+      <div class="seller-profile">
+        <h2>Meet your sellers</h2>
+        <div class="seller-info">
+          <img [src]="seller.profileImage">
+          <div class="seller-details">
+            <h3>{{seller.username}}</h3>
+            <p>Owner: <span style="margin-left: 2px;">{{seller.firstname}}</span> <span style="margin-left: 3px;">{{seller.lastname}}</span></p>
+            <button class="follow-shop" (click)="toggleFollow()" [class.following]="isFollowing">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="heart-icon">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+              {{ isFollowing ? 'Following' : 'Follow' }}
+            </button>
+          </div>
+        </div>
+        <button class="message-seller">Message</button>
+        <p class="response-time">This seller usually responds within 24 hours.</p>
       </div>
     </div>
   </div>
 </div>
+
+<div class="overlay" *ngIf="isZoomed" (click)="toggleZoom()"></div>

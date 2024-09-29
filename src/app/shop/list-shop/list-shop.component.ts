@@ -1,15 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
-// Define the Product interface
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  rating: number;
-  category: string;
-  image: string;
-}
+import { Product } from 'src/app/models/Product';
+import { Category } from 'src/app/models/Category';
+import { ProductService } from 'src/app/services/product.service';
+import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
   selector: 'app-list-shop',
@@ -17,62 +10,50 @@ interface Product {
   styleUrls: ['./list-shop.component.css']
 })
 export class ListShopComponent implements OnInit {
-
-  // Array of products
-  products: Product[] = [
-    {
-      id: 1,
-      name: 'Premium Running Shoes',
-      description: 'High-performance running shoes with advanced cushioning technology.',
-      price: 129.99,
-      rating: 4.5,
-      category: 'Running',
-      image: 'assets/running-shoes.jpg'
-    },
-    {
-      id: 2,
-      name: 'Professional Training Kit',
-      description: 'Complete training kit for serious athletes, including resistance bands and weights.',
-      price: 89.99,
-      rating: 4.8,
-      category: 'Training',
-      image: 'assets/training-kit.jpg'
-    },
-    {
-      id: 3,
-      name: 'Lifestyle Sports Jacket',
-      description: 'Stylish and comfortable sports jacket for everyday wear.',
-      price: 79.99,
-      rating: 4.2,
-      category: 'Lifestyle',
-      image: 'assets/sports-jacket.jpg'
-    },
-    {
-      id: 4,
-      name: 'Ultra-light Hiking Backpack',
-      description: 'Durable and lightweight backpack perfect for hiking and outdoor adventures.',
-      price: 149.99,
-      rating: 4.7,
-      category: 'Outdoor',
-      image: 'assets/hiking-backpack.jpg'
-    }
-  ];
-
-  // Filtered products array
+  category!: Category;
+  products: Product[] = [];
   filteredProducts: Product[] = [];
-
-  // Search term and selected category for filtering
   searchTerm: string = '';
   selectedCategory: string = 'All';
-  categories: string[] = ['All', 'Running', 'Training', 'Lifestyle', 'Outdoor'];
-
-  // Pagination variables
+  categories: string[] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 2;  // You can adjust the items per page
+  itemsPerPage: number = 5; // You can adjust the items per page
 
-  // OnInit lifecycle hook
+  constructor(
+    private productService: ProductService,
+    private categoryService: CategoryService
+  ) {}
+
   ngOnInit() {
-    this.filteredProducts = this.products;
+    // Get category names
+    this.categoryService.getAllCategoryNames().subscribe(
+      (data) => {
+        this.categories = data;
+      },
+      (error) => {
+        console.log('Error fetching categories:', error);
+      }
+    );
+
+    // Get products from API
+    this.productService.getAllProducts().subscribe(
+      (data: Product[]) => {
+        console.log("Data received: ", data);
+        this.products = data;
+        this.filteredProducts = this.products;
+
+        // Check if products exist before trying to access them
+        if (this.products.length > 0) {
+          console.log('First product name:', this.products[0]?.name); // Safely log the name of the first product
+        } else {
+          console.log("No products found.");
+        }
+      },
+      (error) => {
+        console.log("Error in fetching products data from API");
+        console.error(error);
+      }
+    );
   }
 
   // Method to filter products based on search term and category
@@ -80,9 +61,18 @@ export class ListShopComponent implements OnInit {
     this.filteredProducts = this.products.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
                             product.description.toLowerCase().includes(this.searchTerm.toLowerCase());
-      const matchesCategory = this.selectedCategory === 'All' || product.category === this.selectedCategory;
+      const matchesCategory = this.selectedCategory === 'All' || product.categoryName === this.selectedCategory;
       return matchesSearch && matchesCategory;
     });
     this.currentPage = 1;  // Reset to the first page whenever filters are applied
   }
+
+
+
+  AddTocard(){
+    //go bro 
+  }
+
+
+
 }

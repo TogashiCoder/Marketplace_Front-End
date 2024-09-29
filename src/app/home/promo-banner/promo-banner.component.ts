@@ -6,16 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./promo-banner.component.css']
 })
 export class PromoBannerComponent {
-  languages = ['English', 'Arabic', 'Français', 'Deutsch'];
-  currencies = ['USD', 'EUR', 'GBP','MAD', 'JPY'];
-  selectedLanguage = 'English';
-  selectedCurrency = 'USD';
+  // languages = ['English', 'Arabic', 'Français', 'Deutsch'];
+  // currencies = ['USD', 'EUR', 'GBP','MAD', 'JPY'];
+  // selectedLanguage = 'English';
+  // selectedCurrency = 'USD';
 
-  onLanguageChange(language: string) {
-    this.selectedLanguage = language;
-  }
+  // onLanguageChange(language: string) {
+  //   this.selectedLanguage = language;
+  // }
 
-  onCurrencyChange(currency: string) {
-    this.selectedCurrency = currency;
-  }
+  // onCurrencyChange(currency: string) {
+  //   this.selectedCurrency = currency;
+  // }
 }

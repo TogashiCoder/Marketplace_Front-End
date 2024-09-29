@@ -4,6 +4,8 @@ import { ProductService } from 'src/app/services/product.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { Category } from 'src/app/models/Category';
 import { finalize } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-add-product',
@@ -25,7 +27,8 @@ export class AddProductComponent implements  OnInit{
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private authService:AuthService
   ) {}
 
 
@@ -116,9 +119,14 @@ export class AddProductComponent implements  OnInit{
   }
 
 
-  getSellerId():number{
-    return 1;
-  }
+  getSellerId(): number {
+    const id: number | null = this.authService.getId();
+    if (id === null) {
+        throw new Error("Seller ID is not available");
+    }
+    return id;
+}
+
 
 
 

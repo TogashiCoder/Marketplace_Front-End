@@ -10,8 +10,7 @@ import { HttpClient} from '@angular/common/http';
 })
 export class CategoryService {
 
-  private apiUrl = 'http://localhost:8080/api';
-
+  private apiUrl = 'http://localhost:8080/api/categories';
 
   constructor(private http: HttpClient) { }
 
@@ -20,11 +19,22 @@ export class CategoryService {
 
 
   getAllCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.apiUrl}/categories/all`);
+    return this.http.get<Category[]>(`${this.apiUrl}/all`);
   }
 
 
 
+  getCategoryById(id: number): Observable<Category> {
+    return this.http.get<Category>(`${this.apiUrl}/${id}`);
+  }
+
+
+
+
+  getAllCategoryNames():Observable<string[]>
+  {
+    return this.http.get<string[]>(`${this.apiUrl}/names`)
+  }
 
 
 

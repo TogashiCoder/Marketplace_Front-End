@@ -9,7 +9,7 @@ import { authGuard } from 'src/app/guiard/auth.guard';
 const routes: Routes = [
   { path: '', component: ProductComponent },
   { path:'add', component:AddProductComponent ,canActivate: [authGuard], data: { role: 'SELLER' },},
-  { path:'details',component:ProductDetailsComponent},
+  { path:'details/:id',component:ProductDetailsComponent},
 
 ];
 

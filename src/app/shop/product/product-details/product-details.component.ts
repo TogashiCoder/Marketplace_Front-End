@@ -1,50 +1,93 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Product } from 'src/app/models/Product';
+import { Seller } from 'src/app/models/Seller';
+import { ProductService } from 'src/app/services/product.service';
+import { SellerService } from 'src/app/services/seller.service';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
+  product!: Product;
+  seller!: Seller;
+  selectedMediaIndex: number = 0;
+  isZoomed: boolean = false;
+  isFollowing: boolean = false;
+  private subscriptions: Subscription = new Subscription();
 
-  product = {
-    "id": 2,
-    "name": "Reiciendis tempora NReiciendis tempora N",
-    "description": "Reiciendis tempora N Reiciendis tempora N Reiciendis tempora N Reiciendis tempora N Reiciendis tempora NReiciendis ",
-    "price": 877.00,
-    "stockQuantity": 143,
-    "minimumOrderQuantity": 455,
-    "discountPercentage": null,
-    "rating": 3,
-    "sellerId": 1,
-    "imageUrls": [
-      "https://res.cloudinary.com/dbqa47fjt/image/upload/v1727189168/nhndev/product/1_20240924154607.jpg.jpg",
-      "https://res.cloudinary.com/dbqa47fjt/image/upload/v1727189170/nhndev/product/2_20240924154609.jpg.jpg",
-      "https://res.cloudinary.com/dbqa47fjt/image/upload/v1727189171/nhndev/product/3_20240924154610.jpg.jpg",
-      "https://res.cloudinary.com/dbqa47fjt/image/upload/v1727189172/nhndev/product/4_20240924154611.jpg.jpg"
-    ],
-    "videoUrls": [
-      "https://res.cloudinary.com/dbqa47fjt/video/upload/v1727189174/nhndev/product/copperDemo_20240924154613.mp4.mp4",
-      "https://res.cloudinary.com/dbqa47fjt/video/upload/v1727189174/nhndev/product/copperDemo_20240924154613.mp4.mp4"
-    ],
-    "createdAt": "2024-09-23T09:04:32.983609",
-    "updatedAt": null,
-    "categoryId": 2
-  };
-
-  selectedMedia = 'image0';
-  isZoomed = false;
+  constructor(
+    private http: HttpClient,
+    private sellerService: SellerService,
+    private productService: ProductService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    this.fetchProductAndSellerInfo();
   }
 
-  handleMediaChange(mediaId: string): void {
-    this.selectedMedia = mediaId;
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  fetchProductAndSellerInfo(): void {
+    const productIdStr = this.route.snapshot.paramMap.get('id');
+    const productId = productIdStr !== null ? Number(productIdStr) : null;
+
+    if (productId === null || isNaN(productId)) {
+      console.error('Invalid or missing product ID provided in the route');
+      return;
+    }
+
+    const subscription = this.productService.getProductById(productId).pipe(
+      catchError(error => {
+        console.error('Error fetching product info:', error);
+        throw error;
+      }),
+      switchMap(product => {
+        this.product = product;
+        return this.sellerService.getSellerById(product.sellerId).pipe(
+          catchError(error => {
+            console.error('Error fetching seller info:', error);
+            throw error;
+          })
+        );
+      })
+    ).subscribe(
+      (seller: Seller) => {
+        this.seller = seller;
+      }
+    );
+
+    this.subscriptions.add(subscription);
+  }
+
+  handleMediaChange(index: number): void {
+    this.selectedMediaIndex = index;
     this.isZoomed = false;
   }
 
-  getMediaIndex(mediaId: string): number {
-    return parseInt(mediaId.replace(/\D/g, ''), 10);
+  toggleZoom(): void {
+    this.isZoomed = !this.isZoomed;
+    document.body.style.overflow = this.isZoomed ? 'hidden' : 'auto';
   }
 
+  isVideo(index: number): boolean {
+    return index >= this.product.imageUrls.length;
+  }
+
+  getAllMedia(): string[] {
+    return [...this.product.imageUrls, ...this.product.videoUrls];
+  }
+
+  toggleFollow(): void {
+    this.isFollowing = !this.isFollowing;
+    // Here you would typically call a service to update the follow status on the server
+  }
 }

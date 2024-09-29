@@ -22,7 +22,7 @@ export class ProductService {
 
   // Method to get a product by its ID
   getProductById(productId: number): Observable<Product> {
-    return this.http.get<Product>(`${this.apiUrl}/${productId}`);
+    return this.http.get<Product>(`${this.apiUrl}/by/${productId}`);
   }
 
   // Method to get all products

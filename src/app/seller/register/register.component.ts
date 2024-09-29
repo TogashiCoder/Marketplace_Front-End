@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SellerRegisterService } from 'src/app/services/seller-register.service';
 import { finalize } from 'rxjs/operators';
+import { SellerService } from 'src/app/services/seller.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private sellerRegisterService:SellerRegisterService
+    private sellerService:SellerService
   ) {}
 
   ngOnInit(): void {
@@ -69,7 +69,7 @@ export class RegisterComponent implements OnInit {
       formData.append('coverImage', this.selectedCoverImage);
     }
 
-    this.sellerRegisterService.registerSeller(formData)
+    this.sellerService.registerSeller(formData)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: (response) => {

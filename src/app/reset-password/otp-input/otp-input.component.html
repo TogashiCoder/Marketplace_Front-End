@@ -1,0 +1,10 @@
+<div class="form-container">
+  <h2>Enter OTP</h2>
+  <p>OTP sent to <span class="email-highlight" >{{email}}</span></p>
+  <input [(ngModel)]="otp" placeholder="Enter OTP" type="text" [disabled]="isLoading">
+  <button (click)="verifyOtp()" [disabled]="isLoading || !otp">
+    {{ isLoading ? 'Verifying...' : 'Verify OTP' }}
+  </button>
+  <div class="timer" *ngIf="remainingTime > 0">Time remaining: {{ remainingTime }}s</div>
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+</div>

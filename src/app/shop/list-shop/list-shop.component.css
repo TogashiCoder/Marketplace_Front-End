@@ -67,12 +67,26 @@ body {
     flex-direction: column;
   }
 
-  .product-name {
+  /* .product-name {
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
     color: #319795;
-  }
+  } */
+
+    .product-name {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #319795;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .product-name:hover {
+      color: #2c7a7b; 
+      text-decoration: none;
+    }
 
   .product-description {
     font-size: 0.875rem;

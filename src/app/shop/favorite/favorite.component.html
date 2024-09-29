@@ -13,32 +13,35 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of wishlistItems">
+        <tr *ngFor="let item of FavoriteProducts">
           <td>
             <div class="product-info">
               <div class="product-image"></div>
               <div>
-                <div class="product-name">{{ item.name }}</div>
-                <div class="product-description">{{ item.description }}</div>
+                <div class="product-name">{{ item.product.name }}</div>
+                <div class="product-description">{{ item.product.description }}</div>
               </div>
             </div>
           </td>
-          <td>{{ item.price | currency }}</td>
+          <td>{{ item.product.price| currency }}</td>
           <td>
-            <span [class.in-stock]="item.inStock" [class.out-of-stock]="!item.inStock">
-              {{ item.inStock ? 'In Stock' : 'Out of stock' }}
+            <span
+              [class.in-stock]="item.product.stockQuantity > 0"
+              [class.out-of-stock]="item.product.stockQuantity === 0">
+              {{ item.product.stockQuantity > 0 ? 'In Stock' : 'Out of Stock' }}
             </span>
           </td>
           <td>
             <button
-              [class.primary-button]="item.inStock"
-              [class.secondary-button]="!item.inStock"
-              (click)="onActionClick(item)">
-              {{ item.inStock ? 'Add to cart' : 'Contact Us' }}
+              [class.primary-button]="item.product.stockQuantity > 0"
+              [class.secondary-button]="item.product.stockQuantity === 0"
+              (click)="item.product.stockQuantity > 0 ? onActionClick(item) : contactShop()">
+              {{ item.product.stockQuantity > 0 ? 'Add to Cart' : 'Contact Shop' }}
             </button>
           </td>
+
           <td>
-            <button class="remove-button" (click)="removeItem(item.id)">
+            <button class="remove-button" (click)="removeItem(item.product.id)">
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>

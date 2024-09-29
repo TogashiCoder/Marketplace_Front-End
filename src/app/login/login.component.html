@@ -12,15 +12,15 @@
     </div>
     <div class="form-options">
 
-      <a href="#" style="color: black;">Forgot password</a>
+      <a  routerLink="/reset-password" class="forgetPassword">Forgot password</a>
     </div>
     <button type="submit" [disabled]="!loginForm.valid">Sign In</button>
   </form>
   <div class="signup-options">
     <p> Sign Up As</p>
     <div class="signup-buttons">
-      <button (click)="signUpAs('seller')">Seller</button>
-      <button (click)="signUpAs('buyer')">Buyer</button>
+      <button routerLink="/seller/register" >Seller</button>
+      <button routerLink="/buyer/register" >Buyer</button>
     </div>
   </div>
 </div>

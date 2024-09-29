@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { FavoriteService } from 'src/app/services/favorite.service';
+import { FavoriteProduct } from 'src/app/models/FavoriteProduct';
+import { AuthService } from 'src/app/services/auth.service';
 
 interface WishlistItem {
   id: number;
@@ -17,84 +19,85 @@ interface WishlistItem {
 })
 export class FavoriteComponent {
 
-  wishlistItems: WishlistItem[] = [
-    {
-      id: 1,
-      name: 'Wireless Headphones',
-      description: 'Noise-cancelling over-ear headphones with Bluetooth connectivity.',
-      price: 99.99,
-      inStock: true
-    },
-    {
-      id: 2,
-      name: 'Smartphone Stand',
-      description: 'Adjustable phone holder suitable for all smartphone sizes.',
-      price: 14.99,
-      inStock: true
-    },
-    {
-      id: 3,
-      name: 'Gaming Mouse',
-      description: 'Ergonomic gaming mouse with customizable RGB lighting.',
-      price: 49.99,
-      inStock: false
-    },
-    {
-      id: 4,
-      name: 'Mechanical Keyboard',
-      description: 'Compact mechanical keyboard with tactile switches.',
-      price: 89.99,
-      inStock: true
-    },
-    {
-      id: 5,
-      name: 'External Hard Drive',
-      description: '1TB external hard drive with USB 3.0 support.',
-      price: 59.99,
-      inStock: false
-    }
-  ];
+  FavoriteProducts:FavoriteProduct[] =[];
 
-  constructor(private http: HttpClient) {}
+
+  constructor(
+    private http: HttpClient,
+    private favoriteService:FavoriteService,
+    private authService:AuthService
+  ) {}
 
   ngOnInit() {
-   // this.fetchWishlistItems();
+    this.fetchFavoriteProducts()
   }
 
-  // fetchWishlistItems() {
-  //   this.http.get<WishlistItem[]>('http://localhost:3000/wishlist')
-  //     .subscribe(
-  //       (data) => {
-  //         this.wishlistItems = data;
-  //       },
-  //       (error) => {
-  //         console.error('Error fetching wishlist items:', error);
-  //       }
-  //     );
-  // }
 
-  onActionClick(item: WishlistItem) {
-    if (item.inStock) {
-      console.log('Adding to cart:', item);
-      // Implement your add to cart logic here
+  fetchFavoriteProducts(){
+    this.favoriteService.getFavoritesByBuyerId(this.getBuyerId()).subscribe(
+      (data)=>{
+        this.FavoriteProducts = data;
+        console.log("=======================")
+        console.log(this.FavoriteProducts)
+      },
+      (error)=>{
+        console.log("=======================")
+        console.error(error);
+      }
+    )
+
+  }
+
+
+
+
+  onActionClick(item: FavoriteProduct) {
+
+  }
+
+  contactShop(){
+
+  }
+
+
+
+  removeItem(productId: number) {
+    console.log("Attempting to remove item from favorites...");
+
+    const buyerId = this.authService.getId();
+    console.log("Buyer ID: " + buyerId);
+    console.log("Product ID: " + productId);
+
+    if (buyerId !== null && !isNaN(buyerId)) {
+        this.favoriteService.removeFavorite(buyerId, productId).subscribe(
+            (response) => {
+                console.log('Successfully removed favorite for product ID: ', productId);
+                this.fetchFavoriteProducts();
+            },
+            (error) => {
+                console.log('Error removing item from favorites: ' + error);
+                console.error(error);
+            }
+        );
     } else {
-      console.log('Contacting about:', item);
-      // Implement your contact us logic here
+        console.error('Invalid Buyer ID: ', buyerId);
     }
-  }
+}
 
-  removeItem(id: number) {
-    // Replace this URL with your actual API endpoint
-    this.http.delete(`http://localhost:3000/wishlist/${id}`)
-      .subscribe(
-        () => {
-          this.wishlistItems = this.wishlistItems.filter(item => item.id !== id);
-        },
-        (error) => {
-          console.error('Error removing item:', error);
-        }
-      );
+
+
+
+getBuyerId(): number {
+  const buyerId = this.authService.getId();
+  if (buyerId !== null && !isNaN(buyerId)) {
+    console.log(buyerId)
+      return buyerId;
+  } else {
+      console.error('Invalid Buyer ID, returning 0 as default');
+      return 0;
   }
+}
+
 
 
 }

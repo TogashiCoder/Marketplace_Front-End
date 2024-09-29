@@ -17,9 +17,8 @@ export class BuyerRegisterService {
   ) { }
 
 
-  registerSeller(formData: FormData): Observable<any> {
+  registerBuyer(formData: FormData): Observable<any> {
     return this.http.post(`${this.API_URL}/register`, formData);
   }
   }
 
-///ORIGIN

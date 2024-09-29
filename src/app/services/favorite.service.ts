@@ -13,11 +13,12 @@ export class FavoriteService {
 
   constructor(private http: HttpClient) { }
 
+
+
+
+
   addFavorite(buyerId: number, productId: number): Observable<FavoriteDto> {
-    const params = new HttpParams()
-      .set('buyerId', buyerId.toString())
-      .set('productId', productId.toString());
-    return this.http.post<FavoriteDto>(this.API_URL, null, { params });
+    return this.http.post<FavoriteDto>(`${this.API_URL}/make/${buyerId}/${productId}`, {});
   }
 
 
@@ -32,11 +33,8 @@ export class FavoriteService {
   }
 
 
-  isProductFavorited(buyerId: number, productId: number): Observable<boolean> {
-    const params = new HttpParams()
-      .set('buyerId', buyerId.toString())
-      .set('productId', productId.toString());
-    return this.http.get<boolean>(`${this.API_URL}/check`, { params });
+  isFavorite(buyerId: number, productId: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.API_URL}/check/${buyerId}/${productId}`);
   }
 
 

@@ -26,7 +26,7 @@ h1, h2, h3 {
 }
 
 .media-section {
-  position: sticky;
+  /* position: sticky; */
   top: 20px;
 }
 
@@ -334,4 +334,42 @@ h1 {
   justify-content: center;
   align-items: center;
   z-index: 999;
+}
+
+
+.quantity-selector {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.quantity-controls button {
+  width: 30px;
+  height: 30px;
+  border: 1px solid  #015050;
+  background-color: #fff;
+  color: #008080;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.quantity-controls button:hover {
+  background-color: #008080;
+  color: #fff;
+}
+
+.quantity-controls input {
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 5px;
 }

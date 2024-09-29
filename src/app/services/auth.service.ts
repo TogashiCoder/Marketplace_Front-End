@@ -27,7 +27,7 @@ export class AuthService {
 
 
 
- 
+
 
 
 
@@ -95,6 +95,15 @@ export class AuthService {
     return null;
   }
 
+
+  isLoggedIn(): boolean {
+    return this.isAuthenticated();
+  }
+
+
+  isBuyer(): boolean {
+    return this.isLoggedIn() && this.getUserRole() === 'BUYER';
+  }
 
 
 }

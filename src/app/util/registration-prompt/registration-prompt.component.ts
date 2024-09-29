@@ -28,11 +28,28 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class RegistrationPromptComponent {
 
-
+  @Input() actionType: string = '';
   @Input() show: boolean = false;
-  @Input() message: string = 'Please register to access this feature.';
+  @Input() message: string = '';
+
   @Output() register = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();
+
+
+
+  updateMessage() {
+    switch (this.actionType) {
+      case 'addToCart':
+        this.message = 'Please register to add this item to your cart.';
+        break;
+      case 'addToWishlist':
+        this.message = 'Please register to add this item to your wishlist.';
+        break;
+      default:
+        this.message = 'Please register to access this feature.';
+    }
+  }
+
 
   onRegister() {
     this.register.emit();

@@ -1,4 +1,4 @@
-<div class="product-details" style="margin-top: 20px;">
+<div class="product-details" style="margin-top: 20px; margin-left: 30px;">
   <div class="product-grid">
     <div class="media-section">
       <div class="main-media" [ngClass]="{'zoomed': isZoomed}" (click)="toggleZoom()">
@@ -52,19 +52,27 @@
           <li *ngIf="product.discountPercentage">Discount: {{ product.discountPercentage }}%</li>
           <li>Category: {{ product.categoryName }}</li>
         </ul>
-        <div class="timestamps" style="margin-top: 5px; margin-bottom: -20px;">
-          <p>Created: {{ product.createdAt | date:'shortDate' }}</p>
-          <p *ngIf="product.updatedAt">Updated: {{ product.updatedAt | date:'shortDate' }}</p>
+      </div>
+
+      <!-- Quantity Selector -->
+      <div class="quantity-selector">
+        <label for="quantity">Quantity</label>
+        <div class="quantity-controls">
+          <button (click)="decreaseQuantity()" [disabled]="quantity <= product.minimumOrderQuantity">-</button>
+          <input id="quantity" type="number" [(ngModel)]="quantity" min="{{ product.minimumOrderQuantity }}" max="{{ product.stockQuantity }}" readonly>
+          <button (click)="increaseQuantity()" [disabled]="quantity >= product.stockQuantity">+</button>
         </div>
       </div>
 
       <div class="action-buttons">
-        <button class="add-to-cart">Add to Cart</button>
-        <button class="add-to-wishlist">Add to Wishlist</button>
+        <button class="add-to-cart" (click)="addToCart(product.id)">Add to Cart</button>
+        <button class="add-to-wishlist" (click)="toggleWishlist()">
+          {{ isFavorite ? 'Remove from Wishlist' : 'Add to Wishlist' }}
+        </button>
       </div>
 
       <div class="seller-profile">
-        <h2>Meet your sellers</h2>
+        <!-- <h2>Explore more products</h2> -->
         <div class="seller-info">
           <img [src]="seller.profileImage">
           <div class="seller-details">
@@ -79,10 +87,20 @@
           </div>
         </div>
         <button class="message-seller">Message</button>
-        <p class="response-time">This seller usually responds within 24 hours.</p>
+        <p class="response-time">This Shop usually responds within 24 hours.</p>
       </div>
     </div>
   </div>
-</div>
 
-<div class="overlay" *ngIf="isZoomed" (click)="toggleZoom()"></div>
+
+  <app-registration-prompt
+  [show]="showRegistrationPrompt"
+  [message]="registrationPromptMessage"
+  [actionType]="registrationPromptAction"
+  (register)="onRegister()"
+  (close)="onCloseRegistrationPrompt()">
+</app-registration-prompt>
+
+
+
+</div>

@@ -39,4 +39,22 @@ export class ProductService {
   deleteProduct(productId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete/${productId}`);
   }
+
+
+    // Method to get all products by category
+    getAllProductsByCategory(categoryId: number): Observable<Product[]> {
+      return this.http.get<Product[]>(`${this.apiUrl}/category/${categoryId}`);
+    }
+
+    // Method to get all products by seller ID
+    getAllProductsBySellerId(sellerId: number): Observable<Product[]> {
+      return this.http.get<Product[]>(`${this.apiUrl}/seller/${sellerId}`);
+    }
+
+    // Method to get all products without a coupon
+    getAllProductsWithoutCoupon(): Observable<Product[]> {
+      return this.http.get<Product[]>(`${this.apiUrl}/no-coupon`);
+    }
+
+
 }

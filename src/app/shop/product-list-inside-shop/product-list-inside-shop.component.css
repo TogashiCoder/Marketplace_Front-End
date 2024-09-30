@@ -1,3 +1,7 @@
+.featured-items {
+  margin: 0 20px; /* Add left and right margin */
+}
+
 .featured-items h2 {
   font-size: 1.5rem;
   margin-bottom: 16px;
@@ -8,6 +12,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
+  max-width: 1000px; /* Limit the max width to control the number of items per row */
+  margin: 0 auto; /* Center the grid */
 }
 
 .item-card {
@@ -36,4 +42,10 @@
 .item-price {
   color: #718096;
   margin: 0 8px 8px;
+}
+
+@media (min-width: 1040px) {
+  .items-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

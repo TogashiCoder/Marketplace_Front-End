@@ -373,3 +373,96 @@ h1 {
   border-radius: 4px;
   margin: 0 5px;
 }
+
+
+.followers-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+  color: #008080;
+  font-weight: bold;
+}
+
+.followers-info svg {
+  fill: #008080;
+}
+
+
+/*  */
+
+.follow-container {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Adjust gap as needed */
+}
+
+.follow-shop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background-color: #008080;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.follow-shop:hover {
+  background-color: #00b3b3;
+}
+
+.follow-shop .heart-icon {
+  width: 20px;
+  height: 20px;
+  stroke: white;
+}
+
+.follow-shop.following {
+  background-color: #006666;
+}
+
+.followers-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.followers-info svg {
+  /* fill: #008080; */
+  fill: tomato;
+}
+
+
+.shop-explore {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #008080;
+  transition: color 0.3s ease;
+}
+
+.shop-explore:hover {
+  color: #00b3b3;
+}
+
+
+
+.owner-name {
+  font-size: 1.2rem; /* Adjust font size as needed */
+  color: #4a4a4a; /* A neutral text color for the owner's name */
+  margin-top: 10px; /* Adjust the spacing around the text */
+  font-weight: 500; /* Slightly bolder for emphasis */
+}
+
+.owner-name span {
+  font-weight: 400;
+  color: #333;
+  font-family: 'Georgia', serif;
+}
+

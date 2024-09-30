@@ -1,17 +1,14 @@
+
+
+
+
+
 <div class="shop-profile">
-  <!-- CoverImage -->
-<app-shop-cover></app-shop-cover>
-<div class="content">
-<!-- Profile Image and Details of the shop -->
-  <app-shop-details></app-shop-details>
-
-  <!-- Input Serch inside the shop -->
-  <app-inside-shop-search></app-inside-shop-search>
-
-  <!-- Product List (inside the shop) -->
-  <app-product-list-inside-shop></app-product-list-inside-shop>
-  <!-- ProfilShop Footer -->
-  <app-shop-profil-footer></app-shop-profil-footer>
-
-</div>
+  <app-shop-cover [seller]="seller"></app-shop-cover>
+  <div class="content">
+    <app-shop-details [seller]="seller"></app-shop-details>
+    <app-inside-shop-search (search)="onSearch($event)"></app-inside-shop-search>
+    <app-product-list-inside-shop [products]="displayedProducts"></app-product-list-inside-shop>
+    <app-shop-profil-footer [seller]="seller"></app-shop-profil-footer>
+  </div>
 </div>

@@ -1,13 +1,16 @@
+
 <section class="featured-items">
   <h2>Featured Items</h2>
-  <div class="items-grid">
-    <div class="item-card">
-      <img src="/placeholder.svg?height=200&width=200&text=Item 1" alt="Featured item 1" />
-      <p class="item-name">Handmade Item 1</p>
-      <p class="item-price">$19.99</p>
+  <div *ngIf="isLoading">Loading products...</div>
+  <div *ngIf="error">{{ error }}</div>
+  <div *ngIf="!isLoading && !error">
+    <div *ngIf="products.length > 0" class="items-grid">
+      <div class="item-card" *ngFor="let product of products">
+        <img [src]="getImageUrl(product)" [alt]="product.name" />
+        <a [routerLink]="['/shop/product/details', product.id]" class="item-name"> {{ product.name }}</a>
+        <p class="item-price">{{ product.price | currency }}</p>
+      </div>
     </div>
-    <!-- Repeat for other items as needed -->
-
-    
+    <div *ngIf="products.length === 0">No products available.</div>
   </div>
 </section>

@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: '', component: ShopComponent },
   { path: 'favorite', component: FavoriteComponent},
   { path: 'Shopping-cart',component:ShoppingCartComponent},
-  { path: 'my-shop',component:ShopProfileComponent},
+  { path: 'my-shop/:id',component:ShopProfileComponent},
   { path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule) },
   { path: 'Shop-Followers',component:ShopFollowersComponent},
   { path: 'Shop-List',component:ListShopComponent},

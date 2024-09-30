@@ -1,15 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import { Product } from 'src/app/models/Product';
 import { Seller } from 'src/app/models/Seller';
 import { ProductService } from 'src/app/services/product.service';
 import { SellerService } from 'src/app/services/seller.service';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
 import { FavoriteService } from 'src/app/services/favorite.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { FollowingService } from 'src/app/services/following.service';
 
 @Component({
   selector: 'app-product-details',
@@ -17,34 +16,33 @@ import { Router } from '@angular/router';
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
-
-  showRegistrationPrompt: boolean = false;
-  registrationPromptMessage: string = '';
-  registrationPromptAction: string = '';
-
-
   product!: Product;
   seller!: Seller;
   selectedMediaIndex: number = 0;
   isZoomed: boolean = false;
   isFollowing: boolean = false;
   isFavorite: boolean = false;
-  quantity: number = 1;  // Default quantity to 1 or the minimumOrderQuantity
+  quantity: number = 1;
+  followerCount: number = 0;
   private subscriptions: Subscription = new Subscription();
 
+  showRegistrationPrompt: boolean = false;
+  registrationPromptMessage: string = '';
+  registrationPromptAction: string = '';
+
   constructor(
-    private http: HttpClient,
-    private sellerService: SellerService,
     private productService: ProductService,
+    private sellerService: SellerService,
     private route: ActivatedRoute,
+    private router: Router,
     private favoriteService: FavoriteService,
     private authService: AuthService,
-    private router:Router
+    private followingService: FollowingService
   ) {}
 
   ngOnInit(): void {
     this.fetchProductAndSellerInfo();
-    this.checkIfFavorite();
+   this.checkIfFavorite();
   }
 
   ngOnDestroy(): void {
@@ -78,6 +76,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     ).subscribe(
       (seller: Seller) => {
         this.seller = seller;
+        this.checkIfFollowing();
+        this.getFollowerCount();
       }
     );
 
@@ -85,39 +85,42 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   checkIfFavorite(): void {
-    const productId = this.product.id;
-    const buyerId = this.getBuyerId();
-
-    this.favoriteService.isFavorite(buyerId, productId).subscribe(isFav => {
-      this.isFavorite = isFav;
-    });
+    if (this.authService.isLoggedIn()) {
+      const productId = this.product.id;
+      const buyerId = this.authService.getId();
+      if (buyerId !== null) {
+        this.favoriteService.isFavorite(buyerId, productId).subscribe(isFav => {
+          this.isFavorite = isFav;
+        });
+      }
+    }
   }
 
-  // toggleWishlist(): void {
-  //   const buyerId = this.getBuyerId();
-  //   const productId = this.product.id;
-
-  //   if (this.isFavorite) {
-  //     this.favoriteService.removeFavorite(buyerId, productId).subscribe(() => {
-  //       this.isFavorite = false;
-  //     });
-  //   } else {
-  //     this.favoriteService.addFavorite(buyerId, productId).subscribe(() => {
-  //       this.isFavorite = true;
-  //     });
-  //   }
-  // }
-
-  toggleFollow(): void {
-    if (!this.canPerformAction()) {
-      this.showRegistrationPrompt = true;
-      this.registrationPromptMessage = 'Please register to follow this seller.';
-      this.registrationPromptAction = 'followSeller';
-      return;
+  checkIfFollowing(): void {
+    if (this.authService.isLoggedIn()) {
+      const buyerId = this.authService.getId();
+      if (buyerId !== null) {
+        this.followingService.isFollowing(buyerId, this.seller.id).subscribe(
+          isFollowing => {
+            this.isFollowing = isFollowing;
+          },
+          error => {
+            console.error('Error checking follow status:', error);
+          }
+        );
+      }
     }
+  }
 
-    this.isFollowing = !this.isFollowing;
-    // Logic to follow/unfollow seller...
+  getFollowerCount(): void {
+    this.followingService.getFollowerCountForSeller(this.seller.id).subscribe(
+      count => {
+        this.followerCount = count;
+      },
+      error => {
+        console.error('Error fetching follower count:', error);
+      }
+    );
   }
 
   toggleWishlist(): void {
@@ -128,7 +131,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const buyerId = this.getBuyerId();
+    const buyerId = this.authService.getId();
+    if (buyerId === null) return;
+
     const productId = this.product.id;
 
     if (this.isFavorite) {
@@ -142,27 +147,68 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  addToCart(productId: number) {
+    if (!this.canPerformAction()) {
+      this.showRegistrationPrompt = true;
+      this.registrationPromptMessage = 'Please register to add this item to your cart.';
+      this.registrationPromptAction = 'addToCart';
+      return;
+    }
 
+    // Logic to add to cart...
+  }
+
+  toggleFollow(): void {
+    if (!this.canPerformAction()) {
+      this.showRegistrationPrompt = true;
+      this.registrationPromptMessage = 'Please register to follow this seller.';
+      this.registrationPromptAction = 'followSeller';
+      return;
+    }
+
+    const buyerId = this.authService.getId();
+    if (buyerId === null) return;
+
+    if (this.isFollowing) {
+      this.followingService.unfollow(buyerId, this.seller.id).subscribe(
+        () => {
+          this.isFollowing = false;
+          this.followerCount--;
+        },
+        error => {
+          console.error('Error unfollowing seller:', error);
+        }
+      );
+    } else {
+      this.followingService.follow(buyerId, this.seller.id).subscribe(
+        () => {
+          this.isFollowing = true;
+          this.followerCount++;
+        },
+        error => {
+          console.error('Error following seller:', error);
+        }
+      );
+    }
+  }
 
   canPerformAction(): boolean {
     return this.authService.isLoggedIn() && this.authService.getUserRole() === 'BUYER';
   }
 
   onRegister(): void {
+    this.showRegistrationPrompt = false;
     this.router.navigate(['/login'], {
       queryParams: {
         returnUrl: this.router.url,
         action: this.registrationPromptAction
       }
     });
-    this.showRegistrationPrompt = false;
   }
 
   onCloseRegistrationPrompt(): void {
     this.showRegistrationPrompt = false;
   }
-
-
 
   handleMediaChange(index: number): void {
     this.selectedMediaIndex = index;
@@ -182,33 +228,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     return [...this.product.imageUrls, ...this.product.videoUrls];
   }
 
-  // toggleFollow(): void {
-  //   this.isFollowing = !this.isFollowing;
-  // }
-
-  addToCart(productId: number) {
-    if (!this.canPerformAction()) {
-      this.showRegistrationPrompt = true;
-      this.registrationPromptMessage = 'Please register to add this item to your cart.';
-      this.registrationPromptAction = 'addToCart';
-      return;
-    }
-
-    // Logic to add to cart...
-  }
-
-  getBuyerId(): number {
-    const buyerId = this.authService.getId();
-    if (buyerId !== null && !isNaN(buyerId)) {
-      console.log(buyerId);
-      return buyerId;
-    } else {
-      console.error('Invalid Buyer ID, returning 0 as default');
-      return 0;
-    }
-  }
-
-  // Quantity adjustment methods
   increaseQuantity(): void {
     if (this.quantity < this.product.stockQuantity) {
       this.quantity++;
@@ -220,11 +239,4 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.quantity--;
     }
   }
-
-
-
-
-
-
-
 }

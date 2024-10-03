@@ -9,6 +9,7 @@ import { SellerService } from 'src/app/services/seller.service';
 import { FavoriteService } from 'src/app/services/favorite.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FollowingService } from 'src/app/services/following.service';
+import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
 @Component({
   selector: 'app-product-details',
@@ -29,6 +30,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   showRegistrationPrompt: boolean = false;
   registrationPromptMessage: string = '';
   registrationPromptAction: string = '';
+  isItemInCart: boolean = false;
+  cartId: number = 0;
 
   constructor(
     private productService: ProductService,
@@ -37,12 +40,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private favoriteService: FavoriteService,
     private authService: AuthService,
-    private followingService: FollowingService
+    private followingService: FollowingService,
+    private shoppingCartService: ShoppingCartService,
   ) {}
 
   ngOnInit(): void {
     this.fetchProductAndSellerInfo();
-   this.checkIfFavorite();
   }
 
   ngOnDestroy(): void {
@@ -66,6 +69,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       switchMap(product => {
         this.product = product;
         this.quantity = product.minimumOrderQuantity;
+        // Now it's safe to check if favorite
+        this.checkIfFavorite();
         return this.sellerService.getSellerById(product.sellerId).pipe(
           catchError(error => {
             console.error('Error fetching seller info:', error);
@@ -78,6 +83,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         this.seller = seller;
         this.checkIfFollowing();
         this.getFollowerCount();
+        this.checkIfProductInCart();
       }
     );
 
@@ -147,6 +153,32 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  checkIfProductInCart(): void {
+    if (this.authService.isLoggedIn()) {
+      const buyerId = this.authService.getId();
+      if (buyerId !== null) {
+        this.shoppingCartService.getCartIdByBuyerId(buyerId).subscribe(
+          (cartId) => {
+            this.cartId = cartId;
+            if (cartId !== null) {
+              this.shoppingCartService.hasProductInCart(cartId, this.product.id).subscribe(
+                (isInCart) => {
+                  this.isItemInCart = isInCart;
+                },
+                (error) => {
+                  console.error('Error checking if product is in cart:', error);
+                }
+              );
+            }
+          },
+          (error) => {
+            console.error('Error getting cart ID:', error);
+          }
+        );
+      }
+    }
+  }
+
   addToCart(productId: number) {
     if (!this.canPerformAction()) {
       this.showRegistrationPrompt = true;
@@ -155,7 +187,45 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Logic to add to cart...
+    const buyerId = this.authService.getId();
+    if (buyerId === null) {
+      return;
+    }
+
+    this.shoppingCartService.getCartIdByBuyerId(buyerId).pipe(
+      switchMap(cartId => {
+        if (cartId === null) {
+          return this.shoppingCartService.getOrCreateCart(buyerId);
+        } else {
+          return Promise.resolve({ id: cartId });
+        }
+      }),
+      switchMap(cart => this.shoppingCartService.addItemToCart(cart.id, productId, this.quantity))
+    ).subscribe(
+      () => {
+        console.log('Item added to cart successfully');
+        this.isItemInCart = true;
+      },
+      error => {
+        console.error('Error adding item to cart:', error);
+      }
+    );
+  }
+
+  goToShoppingCart() {
+    this.router.navigate(['/shop/Shopping-cart']);
+  }
+
+  getCardId() {
+    const buyerId = this.authService.getId();
+    if (buyerId === null) {
+      return;
+    }
+    this.shoppingCartService.getCartIdByBuyerId(buyerId).subscribe(
+      (id) => {
+        this.cartId = id;
+      }
+    );
   }
 
   toggleFollow(): void {

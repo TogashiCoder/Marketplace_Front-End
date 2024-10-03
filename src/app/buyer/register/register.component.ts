@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BuyerRegisterService } from 'src/app/services/buyer-register.service';
 import { finalize } from 'rxjs/operators';
+import { Router } from '@angular/router'; // Import Router
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   isLoading = false;
   errorMessage = '';
@@ -17,7 +18,8 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private buyerRegisterService: BuyerRegisterService
+    private buyerRegisterService: BuyerRegisterService,
+    private router: Router // Inject Router
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +30,7 @@ export class RegisterComponent {
       username: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
       street: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
@@ -69,7 +71,11 @@ export class RegisterComponent {
           this.showSuccessMessage = true;
           this.registerForm.reset();
           this.selectedProfileImage = null;
-          setTimeout(() => (this.showSuccessMessage = false), 5000);
+
+          setTimeout(() => {
+            this.showSuccessMessage = false;
+            this.router.navigate(['/login']);
+          }, 3000);
         },
         error: (error) => {
           console.error('Error registering buyer:', error);

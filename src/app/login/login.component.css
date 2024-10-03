@@ -1,4 +1,3 @@
-/* Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -15,33 +14,32 @@ body {
   margin: 0;
 }
 
-/* Centered and Larger Rectangular Container */
 .login-container {
   background: #ffffff;
-  padding: 4rem 3rem; /* More padding for a larger look */
+  padding: 4rem 3rem;
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 600px; /* Larger rectangular width */
-  min-height: 400px; /* Ensuring a taller, rectangular height */
+  max-width: 600px;
+  min-height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   transition: all 0.3s ease-in-out;
   margin: auto;
-  margin-top: 20px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 h1 {
   text-align: center;
-  color: #4a5568; /* Updated color */
-  font-size: 2.5rem; /* Larger title */
+  color: #4a5568;
+  font-size: 2.5rem;
   margin-bottom: 2.5rem;
   font-weight: 600;
   letter-spacing: 1px;
 }
 
-/* Form Inputs */
 .form-group input {
   width: 100%;
   padding: 1.2rem;
@@ -55,7 +53,7 @@ h1 {
 }
 
 .form-group input:focus {
-  border-color: #319795; /* Updated color */
+  border-color: #319795;
   background: #ffffff;
   outline: none;
 }

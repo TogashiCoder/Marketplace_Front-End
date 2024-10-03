@@ -1,14 +1,28 @@
-
 <section class="featured-items">
-  <h2>Featured Items</h2>
+  <div class="fordisplay">
+    <h2>Featured Items</h2>
+    <div class="sort-options">
+      <label for="sort-select">Sort by:</label>
+      <select id="sort-select" [(ngModel)]="sortOption">
+        <option value="name">Name</option>
+        <option value="new">Newest</option>
+        <option value="price">Price</option>
+        <option value="rating">Rating</option>
+        <option value="stock">Stock</option>
+      </select>
+    </div>
+  </div>
+
   <div *ngIf="isLoading">Loading products...</div>
   <div *ngIf="error">{{ error }}</div>
   <div *ngIf="!isLoading && !error">
     <div *ngIf="products.length > 0" class="items-grid">
-      <div class="item-card" *ngFor="let product of products">
+      <div class="item-card" *ngFor="let product of sortProducts()">
         <img [src]="getImageUrl(product)" [alt]="product.name" />
-        <a [routerLink]="['/shop/product/details', product.id]" class="item-name"> {{ product.name }}</a>
-        <p class="item-price">{{ product.price | currency }}</p>
+        <a [routerLink]="['/shop/product/details', product.id]" class="item-name">{{ product.name || 'Unnamed Product' }}</a>
+        <p class="item-price">{{ product.price | currency:'USD':'symbol':'1.2-2' }}</p>
+        <p class="item-rating">Rating: {{ product.rating !== null && product.rating !== undefined ? (product.rating | number:'1.1-1') + '/5' : 'N/A' }}</p>
+        <p class="item-stock">In stock: {{ product.stockQuantity !== null && product.stockQuantity !== undefined ? product.stockQuantity : 'N/A' }}</p>
       </div>
     </div>
     <div *ngIf="products.length === 0">No products available.</div>

@@ -19,6 +19,7 @@ interface Follower {
 })
 export class ShopFollowersComponent {
 
+
   followers: Follower[] = [
     { id: 1, name: "John Doe", avatar: "/assets/placeholder.svg", status: "Last purchase: 2 days ago", totalPurchases: 8, lastPurchaseAmount: 120, joinDate: "Jan 15, 2023" },
     { id: 2, name: "Jane Smith", avatar: "/assets/placeholder.svg", status: "Follower since: Jan 2023", totalPurchases: 15, lastPurchaseAmount: 89, joinDate: "Jan 3, 2023" },
@@ -95,10 +96,7 @@ export class ShopFollowersComponent {
     this.closeActionsDropdown(followerId);
   }
 
-  removeFollower(followerId: number) {
-    console.log('Removing follower:', followerId);
-    this.closeActionsDropdown(followerId);
-  }
+
 }
 
 

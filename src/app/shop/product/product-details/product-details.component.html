@@ -65,10 +65,12 @@
       </div>
 
       <div class="action-buttons">
-        <button class="add-to-cart" (click)="addToCart(product.id)">Add to Cart</button>
+        <button *ngIf="!isItemInCart" class="add-to-cart" (click)="addToCart(product.id)">Add to Cart</button>
+        <button *ngIf="isItemInCart" class="go-to-cart" (click)="goToShoppingCart()">Go to Shopping Cart</button>
         <button class="add-to-wishlist" (click)="toggleWishlist()">
           {{ isFavorite ? 'Remove from Wishlist' : 'Add to Wishlist' }}
         </button>
+      
       </div>
 
       <div class="seller-profile">

@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="form-container">
+    <div class="form-card">
+      <div class="form-header">
+        <h2>Create Category</h2>
+        <p>Add a new category to your marketplace</p>
+      </div>
+      <div class="form-content">
+        <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="level">Select Level</label>
+            <select id="level" formControlName="level" (change)="onLevelChange($event)">
+              <option value="level1">Main Category</option>
+              <option value="level2">Subcategory</option>
+              <option value="level3">Sub-subcategory</option>
+              <option value="level4">Additional Subcategory</option> 
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="name">Category Name</label>
+            <input type="text" id="name" formControlName="name">
+            <div *ngIf="categoryForm.get('name')?.invalid && (categoryForm.get('name')?.dirty || categoryForm.get('name')?.touched)" class="error-message">
+              <div *ngIf="categoryForm.get('name')?.errors?.['required']">Name is required.</div>
+              <div *ngIf="categoryForm.get('name')?.errors?.['minlength']">Name must be at least 2 characters long.</div>
+              <div *ngIf="categoryForm.get('name')?.errors?.['maxlength']">Name cannot exceed 100 characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" formControlName="description"></textarea>
+            <div *ngIf="categoryForm.get('description')?.invalid && (categoryForm.get('description')?.dirty || categoryForm.get('description')?.touched)" class="error-message">
+              <div *ngIf="categoryForm.get('description')?.errors?.['maxlength']">Description cannot exceed 500 characters.</div>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="categoryForm.value.level !== 'level1'">
+            <label for="parentCategoryId">Parent Category</label>
+            <select id="parentCategoryId" formControlName="parentCategoryId">
+              <option value="">Select a parent category</option>
+              <option *ngFor="let category of filteredCategories" [value]="category.id">
+                {{ category.name }}
+              </option>
+            </select>
+            <div *ngIf="categoryForm.get('parentCategoryId')?.invalid && (categoryForm.get('parentCategoryId')?.dirty || categoryForm.get('parentCategoryId')?.touched)" class="error-message">
+              <div *ngIf="categoryForm.get('parentCategoryId')?.errors?.['required']">Parent category is required.</div>
+            </div>
+          </div>
+          <button type="submit" class="submit-button" [disabled]="categoryForm.invalid || isLoading">
+            <div class="loader" *ngIf="isLoading"></div>
+            {{ isLoading ? 'Creating...' : 'Create Category' }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

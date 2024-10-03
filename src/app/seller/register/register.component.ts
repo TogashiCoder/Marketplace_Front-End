@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { SellerService } from 'src/app/services/seller.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -15,10 +16,12 @@ export class RegisterComponent implements OnInit {
   showSuccessMessage = false;
   selectedProfileImage: File | null = null;
   selectedCoverImage: File | null = null;
+  showSuccessPopup = false;
 
   constructor(
     private fb: FormBuilder,
-    private sellerService:SellerService
+    private sellerService: SellerService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -74,17 +77,21 @@ export class RegisterComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log('Seller registered successfully!', response);
-          this.showSuccessMessage = true;
+          this.showSuccessPopup = true;
           this.registerForm.reset();
           this.selectedProfileImage = null;
           this.selectedCoverImage = null;
-          setTimeout(() => (this.showSuccessMessage = false), 5000);
         },
         error: (error) => {
           console.error('Error registering seller:', error);
           this.errorMessage = 'An error occurred while registering. Please try again.';
         }
       });
+  }
+
+  closeSuccessPopup(): void {
+    this.showSuccessPopup = false;
+    this.router.navigate(['/login']);
   }
 
   get formControls() {

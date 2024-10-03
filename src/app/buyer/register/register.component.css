@@ -181,3 +181,50 @@ select,
 button {
   transition: all 0.3s ease;
 }
+
+
+
+.error-message {
+  color: #319795;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+input.ng-touched.ng-invalid,
+select.ng-touched.ng-invalid {
+  border-color: #319795;
+}
+
+
+.success-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+
+.success-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.success-content h3 {
+  color: #319795;
+  margin-bottom: 1rem;
+}
+
+.success-content p {
+  color: #4a5568;
+}

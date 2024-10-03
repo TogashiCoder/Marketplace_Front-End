@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminRegisterService } from 'src/app/services/admin-register.service';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -8,7 +9,7 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   isLoading = false;
   errorMessage = '';
@@ -17,7 +18,8 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private adminRegisterService: AdminRegisterService
+    private adminRegisterService: AdminRegisterService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +30,7 @@ export class RegisterComponent {
       username: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
       street: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
@@ -66,16 +68,24 @@ export class RegisterComponent {
       .subscribe({
         next: (response) => {
           console.log('Admin registered successfully!', response);
-          this.showSuccessMessage = true;
-          this.registerForm.reset();
-          this.selectedProfileImage = null;
-          setTimeout(() => (this.showSuccessMessage = false), 5000);
+          this.showSuccessPopup();
         },
         error: (error) => {
           console.error('Error registering admin:', error);
           this.errorMessage = 'An error occurred while registering. Please try again.';
         }
       });
+  }
+
+  showSuccessPopup(): void {
+    this.showSuccessMessage = true;
+    setTimeout(() => {
+      const popup = document.querySelector('.success-popup');
+      popup?.classList.add('show', 'animate');
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 3000);
+    }, 0);
   }
 
   get formControls() {

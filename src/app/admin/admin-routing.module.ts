@@ -6,7 +6,8 @@ import { authGuard } from '../guiard/auth.guard';
 
 const routes: Routes = [
   { path: '', component: AdminComponent },
-  { path: 'register', component:RegisterComponent,canActivate:[authGuard],data: {role:'ADMIN'},},
+  { path: 'register', component:RegisterComponent,},//,canActivate:[authGuard],data: {role:'ADMIN'},
+  { path: 'category', loadChildren: () => import('./category/category.module').then(m => m.CategoryModule) },
 ];
 
 @NgModule({

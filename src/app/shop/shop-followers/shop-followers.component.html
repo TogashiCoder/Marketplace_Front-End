@@ -84,7 +84,7 @@
               <div *ngIf="showActionsDropdown[follower.id]" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                 <a (click)="viewProfile(follower.id)" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Profile</a>
                 <a (click)="sendOffer(follower.id)" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Send Offer</a>
-                <a (click)="removeFollower(follower.id)" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Remove Follower</a>
+                <a  class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Remove Follower</a>
                 <div class="border-t border-gray-100 flex justify-center items-center h-16">
                   <button (click)="closeActionsDropdown(follower.id)" class="text-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Close</button>
                 </div>
@@ -96,3 +96,4 @@
     </div>
   </div>
 </div>
+

@@ -10,10 +10,18 @@
           <div class="form-group">
             <label for="firstname">First Name</label>
             <input id="firstname" formControlName="firstname" type="text" placeholder="Enter your first name" required>
+            <span class="error-message" *ngIf="formControls['firstname'].touched && formControls['firstname'].invalid">
+              <span *ngIf="formControls['firstname'].errors?.['required']">First name is required.</span>
+              <span *ngIf="formControls['firstname'].errors?.['minlength']">First name must be at least 2 characters.</span>
+            </span>
           </div>
           <div class="form-group">
             <label for="lastname">Last Name</label>
             <input id="lastname" formControlName="lastname" type="text" placeholder="Enter your last name" required>
+            <span class="error-message" *ngIf="formControls['lastname'].touched && formControls['lastname'].invalid">
+              <span *ngIf="formControls['lastname'].errors?.['required']">Last name is required.</span>
+              <span *ngIf="formControls['lastname'].errors?.['minlength']">Last name must be at least 2 characters.</span>
+            </span>
           </div>
         </div>
         <div class="form-row">
@@ -24,48 +32,81 @@
               <option value="MALE">MALE</option>
               <option value="FEMALE">FEMALE</option>
             </select>
+            <span class="error-message" *ngIf="formControls['gender'].touched && formControls['gender'].invalid">
+              <span *ngIf="formControls['gender'].errors?.['required']">Please select a gender.</span>
+            </span>
           </div>
           <div class="form-group">
             <label for="username">Username</label>
             <input id="username" formControlName="username" type="text" placeholder="Choose a username" required>
+            <span class="error-message" *ngIf="formControls['username'].touched && formControls['username'].invalid">
+              <span *ngIf="formControls['username'].errors?.['required']">Username is required.</span>
+              <span *ngIf="formControls['username'].errors?.['minlength']">Username must be at least 3 characters.</span>
+            </span>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="email">Email</label>
             <input id="email" formControlName="email" type="email" placeholder="Enter your email" required>
+            <span class="error-message" *ngIf="formControls['email'].touched && formControls['email'].invalid">
+              <span *ngIf="formControls['email'].errors?.['required']">Email is required.</span>
+              <span *ngIf="formControls['email'].errors?.['email']">Please enter a valid email address.</span>
+            </span>
           </div>
           <div class="form-group">
             <label for="phone">Phone</label>
             <input id="phone" formControlName="phone" type="tel" placeholder="Enter your phone number" required>
+            <span class="error-message" *ngIf="formControls['phone'].touched && formControls['phone'].invalid">
+              <span *ngIf="formControls['phone'].errors?.['required']">Phone number is required.</span>
+            </span>
           </div>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
           <input id="password" formControlName="password" type="password" placeholder="Choose a password" required>
+          <span class="error-message" *ngIf="formControls['password'].touched && formControls['password'].invalid">
+            <span *ngIf="formControls['password'].errors?.['required']">Password is required.</span>
+            <span *ngIf="formControls['password'].errors?.['minlength']">Password must be at least 6 characters.</span>
+          </span>
         </div>
         <div class="form-group">
           <label for="street">Street Address</label>
           <input id="street" formControlName="street" type="text" placeholder="Enter your street address" required>
+          <span class="error-message" *ngIf="formControls['street'].touched && formControls['street'].invalid">
+            <span *ngIf="formControls['street'].errors?.['required']">Street address is required.</span>
+          </span>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="city">City</label>
             <input id="city" formControlName="city" type="text" placeholder="Enter your city" required>
+            <span class="error-message" *ngIf="formControls['city'].touched && formControls['city'].invalid">
+              <span *ngIf="formControls['city'].errors?.['required']">City is required.</span>
+            </span>
           </div>
           <div class="form-group">
             <label for="state">State</label>
             <input id="state" formControlName="state" type="text" placeholder="Enter your state" required>
+            <span class="error-message" *ngIf="formControls['state'].touched && formControls['state'].invalid">
+              <span *ngIf="formControls['state'].errors?.['required']">State is required.</span>
+            </span>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="zipcode">Zip Code</label>
             <input id="zipcode" formControlName="zipcode" type="text" placeholder="Enter your zip code" required>
+            <span class="error-message" *ngIf="formControls['zipcode'].touched && formControls['zipcode'].invalid">
+              <span *ngIf="formControls['zipcode'].errors?.['required']">Zip code is required.</span>
+            </span>
           </div>
           <div class="form-group">
             <label for="country">Country</label>
             <input id="country" formControlName="country" type="text" placeholder="Enter your country" required>
+            <span class="error-message" *ngIf="formControls['country'].touched && formControls['country'].invalid">
+              <span *ngIf="formControls['country'].errors?.['required']">Country is required.</span>
+            </span>
           </div>
         </div>
         <div class="form-group">
@@ -89,4 +130,17 @@
       </form>
     </div>
   </div>
+
+<!-- popup -->
+<div class="success-popup" *ngIf="showSuccessMessage">
+  <div class="success-content">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    </svg>
+    <h3>Registration Successful!</h3>
+    <p>You will be redirected to the login page shortly.</p>
+  </div>
+</div>
+
 </div>

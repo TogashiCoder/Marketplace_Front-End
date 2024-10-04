@@ -22,7 +22,20 @@
         <a [routerLink]="['/shop/product/details', product.id]" class="item-name">{{ product.name || 'Unnamed Product' }}</a>
         <p class="item-price">{{ product.price | currency:'USD':'symbol':'1.2-2' }}</p>
         <p class="item-rating">Rating: {{ product.rating !== null && product.rating !== undefined ? (product.rating | number:'1.1-1') + '/5' : 'N/A' }}</p>
-        <p class="item-stock">In stock: {{ product.stockQuantity !== null && product.stockQuantity !== undefined ? product.stockQuantity : 'N/A' }}</p>
+        <!-- <p class="item-rating">
+          Rating:
+          {{ product.rating !== null && product.rating !== undefined && product.rating > 0 ? (product.rating | number:'1.1-1') + '/5' : 'No review yet' }}
+        </p> -->
+
+        <!-- <p class="item-stock">In stock: {{ product.stockQuantity !== null && product.stockQuantity !== undefined ? product.stockQuantity : 'N/A' }}</p> -->
+        <p class="item-stock" [ngClass]="{
+          'in-stock': product.stockQuantity > 10,
+          'low-stock': product.stockQuantity > 0 && product.stockQuantity <= 10,
+          'out-of-stock': product.stockQuantity === 0
+        }">
+          In stock: {{ product.stockQuantity !== null && product.stockQuantity !== undefined ? product.stockQuantity : 'N/A' }}
+        </p>
+
       </div>
     </div>
     <div *ngIf="products.length === 0">No products available.</div>

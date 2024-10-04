@@ -24,25 +24,22 @@ export class SubcategoryCreationComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.categoryForm = this.fb.group({
-      level: ['level1', Validators.required],  // Default to Main Category
+      level: ['level1', Validators.required],
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       description: ['', [Validators.maxLength(500)]],
-      parentCategoryId: ['']  // Parent category or subcategory based on level
+      parentCategoryId: ['']
     });
   }
 
   ngOnInit() {
-    // Load all categories on initialization
     this.loadAllCategories();
   }
 
-  // Fetch all categories (root, subcategories, etc.)
   loadAllCategories() {
     this.categoryService.getAllCategories().subscribe({
       next: (categories) => {
         this.allCategories = categories;
-        // Default filtering to root categories (for Main Category level)
-        this.filteredCategories = this.allCategories.filter(c => !c.parentCategoryId);
+        this.filterCategoriesByLevel();
       },
       error: (error) => {
         console.error('Error loading categories', error);
@@ -50,21 +47,28 @@ export class SubcategoryCreationComponent implements OnInit {
     });
   }
 
-  // Handle level change (Main Category, Subcategory, Sub-subcategory, Additional Subcategory)
   onLevelChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const selectedValue = selectElement.value;
+    this.categoryForm.patchValue({ level: selectedValue });
+    this.filterCategoriesByLevel();
+  }
 
-    // Logic for filtering categories based on selected level
-    if (selectedValue === 'level1') {
-      this.filteredCategories = this.allCategories.filter(c => !c.parentCategoryId);  // Root categories
-    } else if (selectedValue === 'level2') {
-      this.filteredCategories = this.allCategories.filter(c => c.parentCategoryId && !c.subCategoryIds?.length);  // Categories without subcategories
-    } else if (selectedValue === 'level3') {
-      this.filteredCategories = this.allCategories.filter(c => c.subCategoryIds?.length);  // Categories with subcategories
-    } else if (selectedValue === 'level4') {
-      // Additional logic for further subcategories
-      this.filteredCategories = this.allCategories.filter(c => c.parentCategoryId && c.subCategoryIds?.length); // Example filter
+  filterCategoriesByLevel() {
+    const selectedLevel = this.categoryForm.get('level')?.value;
+    switch (selectedLevel) {
+      case 'level1':
+        this.filteredCategories = []; // No parent for main categories
+        break;
+      case 'level2':
+        this.filteredCategories = this.allCategories.filter(c => !c.parentCategoryId);
+        break;
+      case 'level3':
+        this.filteredCategories = this.allCategories.filter(c => c.parentCategoryId && !c.parentCategoryId.toString().includes('.'));
+        break;
+      case 'level4':
+        this.filteredCategories = this.allCategories.filter(c => c.parentCategoryId && c.parentCategoryId.toString().includes('.') && c.parentCategoryId.toString().split('.').length === 2);
+        break;
     }
   }
 
@@ -72,22 +76,21 @@ export class SubcategoryCreationComponent implements OnInit {
     if (this.categoryForm.valid) {
       this.isLoading = true;
 
-      const level = this.categoryForm.value.level;
+      const formData = this.categoryForm.value;
       let categoryData: Category = {
-        name: this.categoryForm.value.name,
-        description: this.categoryForm.value.description,
+        name: formData.name,
+        description: formData.description,
         subCategoryIds: []
       };
 
-      // Assign parent category or subcategory based on the selected level
-      if (level !== 'level1') {
-        categoryData.parentCategoryId = this.categoryForm.value.parentCategoryId;
+      if (formData.level !== 'level1') {
+        categoryData.parentCategoryId = formData.parentCategoryId;
       }
 
       this.categoryService.createCategory(categoryData).subscribe({
         next: (response) => {
           this.snackBar.open('Category created successfully', 'Close', { duration: 3000 });
-          this.categoryForm.reset();
+          this.categoryForm.reset({ level: 'level1' });
           this.router.navigate(['/categories']);
         },
         error: (error) => {

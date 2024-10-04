@@ -13,9 +13,10 @@
               <option value="level1">Main Category</option>
               <option value="level2">Subcategory</option>
               <option value="level3">Sub-subcategory</option>
-              <option value="level4">Additional Subcategory</option> 
+              <option value="level4">Additional Subcategory</option>
             </select>
           </div>
+
           <div class="form-group">
             <label for="name">Category Name</label>
             <input type="text" id="name" formControlName="name">
@@ -25,6 +26,7 @@
               <div *ngIf="categoryForm.get('name')?.errors?.['maxlength']">Name cannot exceed 100 characters.</div>
             </div>
           </div>
+
           <div class="form-group">
             <label for="description">Description</label>
             <textarea id="description" formControlName="description"></textarea>
@@ -32,6 +34,7 @@
               <div *ngIf="categoryForm.get('description')?.errors?.['maxlength']">Description cannot exceed 500 characters.</div>
             </div>
           </div>
+
           <div class="form-group" *ngIf="categoryForm.value.level !== 'level1'">
             <label for="parentCategoryId">Parent Category</label>
             <select id="parentCategoryId" formControlName="parentCategoryId">
@@ -44,6 +47,7 @@
               <div *ngIf="categoryForm.get('parentCategoryId')?.errors?.['required']">Parent category is required.</div>
             </div>
           </div>
+
           <button type="submit" class="submit-button" [disabled]="categoryForm.invalid || isLoading">
             <div class="loader" *ngIf="isLoading"></div>
             {{ isLoading ? 'Creating...' : 'Create Category' }}

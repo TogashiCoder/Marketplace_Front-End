@@ -1,0 +1,10 @@
+<div class="popup-overlay" *ngIf="show">
+  <div class="popup-content">
+    <h2>Success!</h2>
+    <p>{{ message }}</p>
+    <div class="button-group">
+      <button (click)="onNewProduct()" class="primary-button">Create New Product</button>
+      <button (click)="onShowProducts()" class="secondary-button">Show My Products</button>
+    </div>
+  </div>
+</div>

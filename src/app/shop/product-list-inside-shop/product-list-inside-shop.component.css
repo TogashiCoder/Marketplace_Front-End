@@ -86,6 +86,12 @@
   margin: 8px;
   color: #319795;
   text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Limits the text to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
 }
 
 .item-price {
@@ -104,4 +110,47 @@
   .items-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+
+.item-rating {
+  font-size: 0.65rem;  /* Smaller font size for rating */
+  color: #ffbf00;  /* Gold color for rating */
+  margin: 0 8px 4px;
+  display: flex;
+  align-items: center;  /* Align text and icon */
+}
+
+.item-rating::before {
+  content: '★';  /* Add a star symbol before the rating */
+  color: #ffbf00;
+  margin-right: 4px;
+}
+
+.item-stock {
+  font-size: 0.65rem;  /* Smaller font size for stock */
+  margin: 0 8px 4px;
+  display: flex;
+  align-items: center;  /* Align text and icon */
+}
+
+.item-stock.in-stock::before {
+  content: '✔';  /* Checkmark for in-stock */
+  color: #48bb78;  /* Green for in-stock */
+  margin-right: 4px;
+  font-size: 0.9rem;
+}
+
+.item-stock.low-stock::before {
+  content: '⚠';  /* Exclamation mark for low stock */
+  color: #f6ad55;  /* Orange for low stock */
+  margin-right: 4px;
+  font-size: 0.9rem;
+}
+
+.item-stock.out-of-stock::before {
+  content: '✘';  /* Cross (X) for out-of-stock */
+  color: #e53e3e;  /* Red for out-of-stock */
+  margin-right: 4px;
+  font-size: 0.9rem;
 }

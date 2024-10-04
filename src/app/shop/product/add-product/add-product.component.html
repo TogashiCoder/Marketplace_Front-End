@@ -9,23 +9,34 @@
         <div class="form-group">
           <label for="name">Product Name</label>
           <input id="name" formControlName="name" type="text" placeholder="Enter product name" required>
+          <span class="error-message" *ngIf="formControls['name'].touched && formControls['name'].errors?.['required']">Product name is required.</span>
+          <span class="error-message" *ngIf="formControls['name'].touched && formControls['name'].errors?.['minlength']">Product name must be at least 3 characters long.</span>
         </div>
         <div class="form-group">
           <label for="description">Description</label>
           <textarea id="description" formControlName="description" placeholder="Describe your product" rows="4" required></textarea>
+          <span class="error-message" *ngIf="formControls['description'].touched && formControls['description'].errors?.['required']">Description is required.</span>
+          <span class="error-message" *ngIf="formControls['description'].touched && formControls['description'].errors?.['minlength']">Description must be at least 10 characters long.</span>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="price">Price</label>
             <input id="price" formControlName="price" type="number" min="0" step="0.01" placeholder="0.00" required>
+            <span class="error-message" *ngIf="formControls['price'].touched && formControls['price'].errors?.['required']">Price is required.</span>
+            <span class="error-message" *ngIf="formControls['price'].touched && formControls['price'].errors?.['min']">Price must be greater than or equal to 0.</span>
           </div>
           <div class="form-group">
             <label for="minimumOrderQuantity">Min Order Qty</label>
             <input id="minimumOrderQuantity" formControlName="minimumOrderQuantity" type="number" min="1" placeholder="1" required>
+            <span class="error-message" *ngIf="formControls['minimumOrderQuantity'].touched && formControls['minimumOrderQuantity'].errors?.['required']">Minimum order quantity is required.</span>
+            <span class="error-message" *ngIf="formControls['minimumOrderQuantity'].touched && formControls['minimumOrderQuantity'].errors?.['min']">Minimum order quantity must be at least 1.</span>
+            <span class="error-message" *ngIf="formControls['minimumOrderQuantity'].touched && formControls['minimumOrderQuantity'].errors?.['exceedsStock']">Minimum order quantity cannot exceed stock quantity.</span>
           </div>
           <div class="form-group">
             <label for="stockQuantity">Stock Quantity</label>
             <input id="stockQuantity" formControlName="stockQuantity" type="number" min="0" placeholder="0" required>
+            <span class="error-message" *ngIf="formControls['stockQuantity'].touched && formControls['stockQuantity'].errors?.['required']">Stock quantity is required.</span>
+            <span class="error-message" *ngIf="formControls['stockQuantity'].touched && formControls['stockQuantity'].errors?.['min']">Stock quantity must be at least 0.</span>
           </div>
         </div>
         <div class="form-group">
@@ -36,6 +47,7 @@
               {{ category.name }}
             </option>
           </select>
+          <span class="error-message" *ngIf="formControls['categoryId'].touched && formControls['categoryId'].errors?.['required']">Category is required.</span>
         </div>
         <div class="form-group">
           <label for="images">Images (required)</label>
@@ -50,6 +62,7 @@
               Choose Images
             </span>
           </div>
+          <span class="error-message" *ngIf="selectedImages.length === 0 && productForm.touched">At least one image is required.</span>
         </div>
         <div class="form-group">
           <label for="videos">Videos (optional)</label>
@@ -65,7 +78,7 @@
             </span>
           </div>
         </div>
-        <button type="submit" [disabled]="productForm.invalid || isLoading" class="submit-button">
+        <button type="submit" [disabled]="productForm.invalid || isLoading || selectedImages.length === 0" class="submit-button">
           <span *ngIf="isLoading" class="loader"></span>
           {{ isLoading ? 'Adding Product...' : 'Add Product' }}
         </button>
@@ -73,3 +86,10 @@
     </div>
   </div>
 </div>
+
+<app-success-popup
+  [show]="showSuccessPopup"
+  [message]="'Product added successfully!'"
+  (newProduct)="onNewProduct()"
+  (showProducts)="onShowProducts()">
+</app-success-popup>

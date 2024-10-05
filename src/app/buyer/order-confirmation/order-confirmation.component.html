@@ -1,0 +1,61 @@
+<div class="w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+  <div class="bg-[#f7fafc] border-b border-[#e2e8f0] p-6">
+    <h2 class="text-[#319795] text-3xl font-bold">Order Confirmation</h2>
+    <p class="text-[#4a5568] mt-2">Thank you for your purchase!</p>
+  </div>
+
+  <div class="p-6">
+    <!-- Order Details -->
+    <div class="bg-[#e6fffa] rounded-lg p-4 mb-6">
+      <h3 class="text-[#2c7a7b] text-xl font-semibold mb-2">Order Details</h3>
+      <p class="text-[#4a5568]"><strong>Order Number:</strong> {{ orderConfirmation.orderNumber }}</p>
+      <p class="text-[#4a5568]"><strong>Order Date:</strong> {{ orderConfirmation.orderDate | date:'fullDate' }}</p>
+      <p class="text-[#4a5568]"><strong>Total Amount:</strong> ${{ orderConfirmation.totalAmount.toFixed(2) }}</p>
+      <p class="text-[#4a5568]"><strong>Estimated Delivery:</strong> {{ orderConfirmation.estimatedDeliveryDate | date:'fullDate' }}</p>
+      <p *ngIf="orderConfirmation.trackingNumber" class="text-[#4a5568]"><strong>Tracking Number:</strong> {{ orderConfirmation.trackingNumber }}</p>
+      <p *ngIf="orderConfirmation.paypalPaymentId" class="text-[#4a5568]"><strong>PayPal Payment ID:</strong> {{ orderConfirmation.paypalPaymentId }}</p>
+    </div>
+
+    <!-- Order Items -->
+    <div class="mb-6">
+      <h3 class="text-[#2c7a7b] text-xl font-semibold mb-2">Order Items</h3>
+      <table class="w-full">
+        <thead>
+          <tr class="bg-[#f7fafc] text-[#4a5568]">
+            <th class="text-left p-2">Product</th>
+            <th class="text-left p-2">Quantity</th>
+            <th class="text-left p-2">Price</th>
+            <th class="text-left p-2">Total Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of orderConfirmation.orderItems" class="border-b border-[#e2e8f0]">
+            <td class="p-2 text-[#4a5568]">{{ item.productName }}</td>
+            <td class="p-2 text-[#4a5568]">{{ item.quantity }}</td>
+            <td class="p-2 text-[#4a5568]">${{ item.price.toFixed(2) }}</td>
+            <td *ngIf="item.discountedPrice" class="p-2 text-[#4a5568]">${{ item.discountedPrice.toFixed(2) }}</td>
+            <td class="p-2 text-[#4a5568]">${{ item.totalPrice.toFixed(2) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Shipping Address -->
+    <div>
+      <h3 class="text-[#2c7a7b] text-xl font-semibold mb-2">Shipping Address</h3>
+      <div class="bg-[#f7fafc] p-4 rounded-lg">
+        <p class="text-[#4a5568]">{{ orderConfirmation.buyerName }}</p>
+        <p class="text-[#4a5568]">{{ orderConfirmation.shippingStreet }}</p>
+        <p class="text-[#4a5568]">{{ orderConfirmation.shippingCity }}, {{ orderConfirmation.shippingState }} {{ orderConfirmation.shippingZipCode }}</p>
+        <p class="text-[#4a5568]">{{ orderConfirmation.shippingCountry }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-[#f7fafc] border-t border-[#e2e8f0] p-6 mt-6">
+    <p class="text-[#4a5568] text-center">
+      If you have any questions about your order, please contact our
+      <a href="#" class="text-[#319795] hover:underline">customer support</a>.
+    </p>
+  </div>
+</div>

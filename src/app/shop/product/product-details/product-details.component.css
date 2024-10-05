@@ -437,3 +437,33 @@ h1, h2, h3 {
     margin-left: 0;
   }
 }
+
+
+
+.daily-view {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Adjust spacing between the icon and text */
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 1px;
+
+}
+
+.view-icon {
+  width: 20px;
+  height: 20px;
+  fill:orange;
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.view-count {
+  font-weight: 600;
+  color: #008080; /* Text color */
+}
+
+.daily-view:hover .view-icon {
+  transform: scale(1.1); /* Slight zoom-in on hover */
+}
+
+

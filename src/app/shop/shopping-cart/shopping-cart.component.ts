@@ -3,7 +3,9 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { CartItem } from 'src/app/models/CartItem';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { switchMap } from 'rxjs/operators';
+import { CouponService } from 'src/app/services/coupon.service';
+import { switchMap, finalize } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-shopping-cart',
@@ -26,10 +28,13 @@ export class ShoppingCartComponent implements OnInit {
   cartId: number | null = null;
   buyerId: number | null = null;
   isLoading: boolean = false;
+  couponErrors: { [key: number]: string } = {};
 
   constructor(
     private shoppingCartService: ShoppingCartService,
-    private authService: AuthService
+    private authService: AuthService,
+    private couponService: CouponService
+
   ) { }
 
   ngOnInit(): void {
@@ -118,10 +123,56 @@ export class ShoppingCartComponent implements OnInit {
     }
   }
 
-  // applyCoupon(itemId: number, coupon: string): void {
-  //   // Placeholder for future coupon implementation
-  //   console.log(`Coupon ${coupon} applied to item ${itemId}`);
-  // }
+  applyCoupon(itemId: number, couponCode: string): void {
+    if (!couponCode.trim()) {
+      this.couponErrors[itemId] = 'Please enter a coupon code';
+      return;
+    }
+
+    const item = this.cartItems.find(i => i.id === itemId);
+    if (!item || !this.buyerId) return;
+
+    this.isLoading = true;
+    delete this.couponErrors[itemId];
+
+    this.couponService.getCouponByCode(couponCode)
+      .pipe(
+        switchMap(coupon =>
+          this.couponService.applyCouponToProduct(coupon.id, item.productId, this.buyerId!)
+        ),
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe(
+        (response) => {
+          // Update the cart item with new discounted price
+          this.loadCartItems(); // Reload cart items to get updated prices
+        },
+        error => {
+          console.error('Error applying coupon:', error);
+          this.couponErrors[itemId] = error.error?.message || 'Error applying coupon';
+        }
+      );
+  }
+
+  removeCoupon(itemId: number): void {
+    const item = this.cartItems.find(i => i.id === itemId);
+    if (!item || !item.appliedCouponId) return;
+
+    this.isLoading = true;
+    delete this.couponErrors[itemId];
+
+    this.couponService.removeCouponFromProduct(item.appliedCouponId, item.productId)
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe(
+        () => {
+          this.loadCartItems(); // Reload cart items to get updated prices
+        },
+        error => {
+          console.error('Error removing coupon:', error);
+          this.couponErrors[itemId] = 'Error removing coupon';
+        }
+      );
+  }
 
   get subtotal(): number {
     return this.cartItems.reduce((sum, item) => sum + item.totalPrice, 0);

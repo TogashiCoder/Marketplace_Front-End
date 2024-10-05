@@ -44,10 +44,31 @@
             </td>
             <td class="total-price">${{item.totalPrice.toFixed(2)}}</td>
             <td>
-              <div class="coupon-control">
-                <!-- <input type="text" (input)="applyCoupon(item.id, $event.target.value)" placeholder="Enter coupon" class="coupon-input" [disabled]="isLoading"> -->
-                <input type="text" placeholder="Enter coupon" class="coupon-input" [disabled]="isLoading">
-                <button class="apply-button" [disabled]="isLoading">Apply</button>
+              <div class="coupon-control" *ngIf="!item.appliedCouponId">
+                <input
+                  type="text"
+                  #couponInput
+                  placeholder="Enter coupon"
+                  class="coupon-input"
+                  [disabled]="isLoading">
+                <button
+                  class="apply-button"
+                  [disabled]="isLoading"
+                  (click)="applyCoupon(item.id, couponInput.value)">
+                  Apply
+                </button>
+              </div>
+              <div class="applied-coupon" *ngIf="item.appliedCouponId">
+                <span class="coupon-code">{{item.appliedCouponCode}}</span>
+                <button
+                  class="remove-coupon-button"
+                  (click)="removeCoupon(item.id)"
+                  [disabled]="isLoading">
+                  Remove
+                </button>
+              </div>
+              <div class="error-message" *ngIf="couponErrors[item.id]">
+                {{ couponErrors[item.id] }}
               </div>
             </td>
             <td>

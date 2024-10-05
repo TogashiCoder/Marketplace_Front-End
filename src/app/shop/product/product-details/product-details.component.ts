@@ -10,6 +10,7 @@ import { FavoriteService } from 'src/app/services/favorite.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FollowingService } from 'src/app/services/following.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
+import { ProductViewService } from 'src/app/services/product-view.service';
 
 @Component({
   selector: 'app-product-details',
@@ -25,6 +26,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   isFavorite: boolean = false;
   quantity: number = 1;
   followerCount: number = 0;
+  viewCount: number = 0;
+  dailyViewCount: number = 0;
+  weeklyViewCount: number = 0;
+  monthlyViewCount: number = 0;
   private subscriptions: Subscription = new Subscription();
 
   showRegistrationPrompt: boolean = false;
@@ -42,6 +47,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private followingService: FollowingService,
     private shoppingCartService: ShoppingCartService,
+    private productViewService: ProductViewService
   ) {}
 
   ngOnInit(): void {
@@ -69,7 +75,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       switchMap(product => {
         this.product = product;
         this.quantity = product.minimumOrderQuantity;
-        // Now it's safe to check if favorite
+        // Add view and load view statistics
+        this.addProductView(product.id);
+        this.loadViewStatistics(product.id);
+        // Continue with existing logic
         this.checkIfFavorite();
         return this.sellerService.getSellerById(product.sellerId).pipe(
           catchError(error => {
@@ -84,10 +93,77 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         this.checkIfFollowing();
         this.getFollowerCount();
         this.checkIfProductInCart();
+      },
+      error => {
+        console.error('Error in product details fetch:', error);
       }
     );
 
     this.subscriptions.add(subscription);
+  }
+
+  private addProductView(productId: number): void {
+    const viewSubscription = this.productViewService.addView(productId).subscribe(
+      () => {
+        console.log('Product view recorded successfully');
+        // Refresh view count after adding a new view
+        this.loadViewStatistics(productId);
+      },
+      error => {
+        console.error('Error recording product view:', error);
+      }
+    );
+    this.subscriptions.add(viewSubscription);
+  }
+
+  private loadViewStatistics(productId: number): void {
+    // Load total views
+    const totalViewsSub = this.productViewService.getTotalViews(productId).subscribe(
+      count => {
+        this.viewCount = count;
+      },
+      error => {
+        console.error('Error loading total view count:', error);
+      }
+    );
+    this.subscriptions.add(totalViewsSub);
+
+    // Load daily views
+    const today = new Date();
+    const dailyViewsSub = this.productViewService.getDailyViews(productId, today).subscribe(
+      count => {
+        this.dailyViewCount = count;
+      },
+      error => {
+        console.error('Error loading daily view count:', error);
+      }
+    );
+    this.subscriptions.add(dailyViewsSub);
+
+    // Load weekly views
+    const weekStart = new Date();
+    weekStart.setDate(weekStart.getDate() - weekStart.getDay()); // Start of current week
+    const weeklyViewsSub = this.productViewService.getWeeklyViews(productId, weekStart).subscribe(
+      count => {
+        this.weeklyViewCount = count;
+      },
+      error => {
+        console.error('Error loading weekly view count:', error);
+      }
+    );
+    this.subscriptions.add(weeklyViewsSub);
+
+    // Load monthly views
+    const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+    const monthlyViewsSub = this.productViewService.getMonthlyViews(productId, monthStart).subscribe(
+      count => {
+        this.monthlyViewCount = count;
+      },
+      error => {
+        console.error('Error loading monthly view count:', error);
+      }
+    );
+    this.subscriptions.add(monthlyViewsSub);
   }
 
   checkIfFavorite(): void {
@@ -214,18 +290,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   goToShoppingCart() {
     this.router.navigate(['/shop/Shopping-cart']);
-  }
-
-  getCardId() {
-    const buyerId = this.authService.getId();
-    if (buyerId === null) {
-      return;
-    }
-    this.shoppingCartService.getCartIdByBuyerId(buyerId).subscribe(
-      (id) => {
-        this.cartId = id;
-      }
-    );
   }
 
   toggleFollow(): void {

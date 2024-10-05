@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'util', loadChildren: () => import('./util/util.module').then(m => m.UtilModule) },
   { path:'test',component:TestComponent},
   { path: 'reset-password', loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordModule) },
+  { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
 ];
 
 @NgModule({

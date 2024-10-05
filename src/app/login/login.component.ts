@@ -39,23 +39,39 @@ export class LoginComponent  implements OnInit{
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value)
+      console.log(this.loginForm.value);
       const { username, password } = this.loginForm.value;
       this.authService.login(username, password).subscribe(
         response => {
           console.log('Login successful', response);
-          console.log("----------------------------")
-          console.log('role is : ' + this.authService.getUserRole())
-          console.log('Id is : ' + this.authService.getUserIdFromJwt())
-          this.router.navigate(['/test']);
+
+          // Get the user role
+          const role = this.authService.getUserRole();
+          console.log('Role is: ' + role);
+          console.log('ID is: ' + this.authService.getUserIdFromJwt());
+
+          // Redirect based on role
+          if (role === 'ADMIN' || role === 'SELLER') {
+            this.router.navigate(['/dashboard']);
+          } else if (role === 'BUYER') {
+            this.router.navigate(['/shop/Shop-List']);
+          } else {
+            console.error('Unknown role: ' + role);
+          }
         },
         error => {
           console.error('Login failed', error);
           this.loginError = 'Invalid username or password';
         }
       );
-
     }
+  }
+
+
+
+
+  getRole():string{
+    return  this.authService.getUserRole()
   }
 
 

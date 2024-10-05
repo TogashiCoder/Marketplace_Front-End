@@ -70,7 +70,7 @@ export class ListShopComponent implements OnInit {
 
 
   AddTocard(){
-    //go bro 
+    //go bro
   }
 
 

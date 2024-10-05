@@ -245,3 +245,47 @@ tr:hover {
 .checkout-button:hover {
   background-color: #2c7a7b;
 }
+
+
+/* Add these to your existing CSS */
+
+.applied-coupon {
+  display: flex;
+  align-items: center;
+  background-color: #e6fffa;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+.coupon-code {
+  font-weight: 600;
+  color: #319795;
+  margin-right: 0.5rem;
+}
+
+.remove-coupon-button {
+  background-color: transparent;
+  color: #e53e3e;
+  border: 1px solid #e53e3e;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.remove-coupon-button:hover {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.coupon-control.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

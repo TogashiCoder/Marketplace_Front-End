@@ -1,0 +1,75 @@
+<div class="dashboard-container" [class.sidebar-open]="!sidebarClosed">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <i class="fas" [ngClass]="sidebarClosed ? 'fa-bars' : 'fa-times'"></i>
+    </button>
+    <h1 class="navbar-title">Dashboard</h1>
+    <div class="profile-dropdown" (click)="toggleProfileDropdown()" [class.active]="profileDropdownActive">
+      <i class="fas fa-user"></i>
+      <div class="dropdown-content">
+        <a href="#">Profile</a>
+        <a href="/login">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+ <!-- Sidebar -->
+<ng-container *ngIf="role === 'ADMIN' || role === 'SELLER'">
+
+  <!-- Admin Template -->
+<ng-template #adminSidebar>
+  <aside class="sidebar" [ngClass]="{'sidebar-mobile': isMobile}" [@sidebarState]="sidebarClosed ? 'closed' : 'open'">
+    <ul class="sidebar-nav">
+      <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="#"><i class="fas fa-users"></i> User Management</a></li>
+      <li><a href="#"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+      <li><a href="#"><i class="fas fa-tags"></i> Categories</a></li>
+      <li><a href="#"><i class="fas fa-file-alt"></i> Reports</a></li>
+      <li><a href="#"><i class="fas fa-tools"></i> Settings</a></li>
+      <li><a href="#"><i class="fas fa-life-ring"></i> Support</a></li>
+    </ul>
+  </aside>
+</ng-template>
+
+
+ <!-- Seller Template -->
+<ng-template #sellerSidebar>
+  <aside class="sidebar" [ngClass]="{'sidebar-mobile': isMobile}" [@sidebarState]="sidebarClosed ? 'closed' : 'open'">
+    <ul class="sidebar-nav">
+      <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="#"><i class="fas fa-box"></i> Orders</a></li>
+      <li><a href="#"><i class="fas fa-cube"></i> Products</a></li>
+      <li><a href="#"><i class="fas fa-warehouse"></i> Inventory Management</a></li>
+      <li><a href="#"><i class="fas fa-chart-line"></i> Sales Analytics</a></li>
+      <li><a routerLink="product-views"><i class="fas fa-chart-bar"></i> Product Views</a></li>
+      <li><a href="#"><i class="fas fa-envelope"></i> Messages</a></li>
+      <li><a href="#"><i class="fas fa-star"></i> Reviews & Ratings</a></li>
+      <li><a href="#"><i class="fas fa-ticket-alt"></i> Coupons</a></li> <!-- New Coupons section -->
+      <li><a href="#"><i class="fas fa-percent"></i> Promotions & Discounts</a></li>
+      <li><a href="#"><i class="fas fa-dollar-sign"></i> Payment & Payouts</a></li>
+      <li><a href="#"><i class="fas fa-file-alt"></i> Reports</a></li>
+      <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+      <li><a href="#"><i class="fas fa-life-ring"></i> Support</a></li>
+    </ul>
+  </aside>
+</ng-template>
+
+
+  <!-- Display Based on Role -->
+  <ng-container *ngIf="role === 'ADMIN'; else sellerSidebar">
+    <ng-container *ngTemplateOutlet="adminSidebar"></ng-container>
+  </ng-container>
+
+</ng-container>
+
+
+  <!-- Overlay for mobile -->
+  <div class="sidebar-overlay" *ngIf="!sidebarClosed && isMobile" (click)="closeSidebar()"></div>
+
+  <!-- Main Content -->
+  <main class="main-content" [ngStyle]="{'margin-left': isMobile ? '0' : (sidebarClosed ? '0' : '250px')}">
+    <router-outlet></router-outlet>
+  </main>
+</div>

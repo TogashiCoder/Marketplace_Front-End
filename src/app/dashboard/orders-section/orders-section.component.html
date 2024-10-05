@@ -1,0 +1,62 @@
+<div class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+  <div class="bg-[#f7fafc] border-b border-[#e2e8f0] p-4">
+    <h2 class="text-[#319795] text-2xl font-bold">My Orders</h2>
+  </div>
+  <div class="p-4">
+    <div class="mb-6 p-4 bg-[#e6fffa] rounded-lg shadow-sm">
+      <h3 class="text-[#2c7a7b] text-lg font-semibold mb-2">Order Summary</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex items-center space-x-2">
+          <div class="p-2 bg-[#319795] rounded-full">
+            <i class="fas fa-shopping-cart text-white"></i>
+          </div>
+          <div>
+            <p class="text-sm text-[#718096]">Total Orders</p>
+            <p class="text-2xl font-bold text-[#4a5568]">{{ summary.totalOrders }}</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="p-2 bg-[#319795] rounded-full">
+            <i class="fas fa-dollar-sign text-white"></i>
+          </div>
+          <div>
+            <p class="text-sm text-[#718096]">Total Revenue</p>
+            <p class="text-2xl font-bold text-[#4a5568]">${{ summary.totalRevenue.toFixed(2) }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="bg-[#f7fafc]">
+            <th class="text-left p-2 text-[#4a5568]">Order ID</th>
+            <th class="text-left p-2 text-[#4a5568]">Customer</th>
+            <th class="text-left p-2 text-[#4a5568]">Date</th>
+            <th class="text-left p-2 text-[#4a5568]">Total</th>
+            <th class="text-left p-2 text-[#4a5568]">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders" class="hover:bg-[#f7fafc] transition-colors">
+            <td class="p-2 font-medium text-[#4a5568]">{{ order.id }}</td>
+            <td class="p-2 text-[#718096]">{{ order.customer }}</td>
+            <td class="p-2 text-[#718096]">{{ order.date }}</td>
+            <td class="p-2 text-[#4a5568] font-bold">${{ order.total.toFixed(2) }}</td>
+            <td class="p-2">
+              <select
+                [(ngModel)]="order.status"
+                (ngModelChange)="handleStatusChange(order.id, $event)"
+                class="p-2 rounded border border-[#e2e8f0]"
+              >
+                <option *ngFor="let status of statusOptions" [value]="status">
+                  {{ status }}
+                </option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

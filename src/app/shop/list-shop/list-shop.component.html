@@ -7,12 +7,12 @@
   </div>
 
   <div class="product-list">
-    <div *ngFor="let product of filteredProducts | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" class="product-card">
+    <div *ngFor="let product of filteredProducts | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" class="product-card" style="height: 300px;">
       <img [src]="product.imageUrls[0]" [alt]="product.name" class="product-image">
       <div class="product-info">
         <h3 style="font-weight: bolder;">{{ product.categoryName }}</h3>
         <a [routerLink]="['/shop/product/details', product.id]" class="product-name">{{product.name}}</a>
-        <p class="product-description">{{ product.description }}</p>
+        <p class="product-description"  >{{ product.description }}</p>
         <div class="product-price-rating">
           <span class="product-price">{{ product.price | currency }}</span>
           <div class="product-rating">
@@ -20,13 +20,13 @@
             [ngClass]="{'filled': star <= (product?.rating || 3)}"></i>
                    </div>
         </div>
-        <button class="primary-button add-to-cart-btn" (click)="AddTocard()">Add to Cart</button>
+        <button class="primary-button add-to-cart-btn" [routerLink]="['/shop/product/details', product.id]" >Show Details</button>
       </div>
     </div>
   </div>
 
   <!-- Pagination controls -->
-   <div style="margin-top: 40px;">
-     <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
-   </div>
+  <div class="pagination-controls">
+    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+  </div>
 </div>

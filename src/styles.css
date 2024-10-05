@@ -8,6 +8,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+
+
 /* Additional custom styles */
 .bg-teal-600 {
   background-color: #0d9488;

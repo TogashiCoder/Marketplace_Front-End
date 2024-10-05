@@ -1,0 +1,40 @@
+<mat-card class="max-w-3xl mx-auto">
+  <mat-card-header class="flex justify-between items-center">
+    <mat-card-title class="text-2xl font-bold text-gray-800">
+      Product Views
+    </mat-card-title>
+    <mat-form-field>
+      <mat-select [(ngModel)]="timeFrame" (selectionChange)="updateChartData()">
+        <mat-option value="daily">Daily</mat-option>
+        <mat-option value="weekly">Weekly</mat-option>
+        <mat-option value="monthly">Monthly</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="mb-6 text-center">
+      <p class="text-lg text-gray-600">Total Views</p>
+      <p class="text-4xl font-bold text-teal-600">
+        {{ totalViews.toLocaleString() }}
+      </p>
+    </div>
+
+    <div style="height: 300px;">
+      <ngx-charts-line-chart
+        [results]="chartData"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Products'"
+        [yAxisLabel]="'Views'"
+        [scheme]="colorScheme"
+        [gradient]="false"
+        [tooltipDisabled]="false"
+      >
+      </ngx-charts-line-chart>
+    </div>
+  </mat-card-content>
+</mat-card>

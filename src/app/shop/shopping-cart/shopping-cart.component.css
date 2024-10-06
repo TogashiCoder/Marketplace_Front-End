@@ -289,3 +289,36 @@ tr:hover {
   opacity: 0.5;
   pointer-events: none;
 }
+
+
+.empty-cart-message {
+  text-align: center;
+  padding: 2rem;
+  background-color: #f7fafc;
+  border-radius: 8px;
+  margin: 1rem;
+}
+
+.empty-cart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon-empty-cart {
+  margin-bottom: 1rem;
+  stroke: #319795;
+}
+
+.empty-cart-container h2 {
+  color: #4a5568;
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.empty-cart-container p {
+  color: #718096;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}

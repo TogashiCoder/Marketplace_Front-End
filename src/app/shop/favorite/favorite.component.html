@@ -1,7 +1,19 @@
+<app-nav-bar></app-nav-bar>
+
 <div class="container">
+  <!-- Show the empty message when no favorite products are found -->
+  <div *ngIf="FavoriteProducts.length === 0" class="empty-cart-container">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-empty-cart">
+      <circle cx="9" cy="21" r="1"></circle>
+      <circle cx="20" cy="21" r="1"></circle>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    </svg>
+    <h2>Your favorites list is empty</h2>
+    <p>Looks like you haven't added anything to your favorites yet.</p>
+  </div>
 
-
-  <div class="table-container">
+  <!-- Display the table of favorite products when there are items -->
+  <div *ngIf="FavoriteProducts.length > 0" class="table-container">
     <table>
       <thead>
         <tr>
@@ -25,23 +37,18 @@
               </div>
             </div>
           </td>
-          <td>{{ item.product.price| currency }}</td>
+          <td>{{ item.product.price | currency }}</td>
           <td>
-            <span
-              [class.in-stock]="item.product.stockQuantity > 0"
-              [class.out-of-stock]="item.product.stockQuantity === 0">
+            <span [class.in-stock]="item.product.stockQuantity > 0" [class.out-of-stock]="item.product.stockQuantity === 0">
               {{ item.product.stockQuantity > 0 ? 'In Stock' : 'Out of Stock' }}
             </span>
           </td>
           <td>
-            <button
-              [class.primary-button]="item.product.stockQuantity > 0"
-              [class.secondary-button]="item.product.stockQuantity === 0"
+            <button [class.primary-button]="item.product.stockQuantity > 0" [class.secondary-button]="item.product.stockQuantity === 0"
               (click)="item.product.stockQuantity > 0 ? onActionClick(item) : contactShop()">
               {{ item.product.stockQuantity > 0 ? 'Add to Cart' : 'Contact Shop' }}
             </button>
           </td>
-
           <td>
             <button class="remove-button" (click)="removeItem(item.product.id)">
               <i class="fas fa-trash-alt"></i>

@@ -15,7 +15,7 @@ export class ProductViewsComponent implements OnInit {
     domain: ['#319795']
   };
 
-  private sellerId: number | null = null; // Initialized with null
+  private sellerId: number | null = null;
 
   constructor(
     private productViewService: ProductViewService,
@@ -28,7 +28,7 @@ export class ProductViewsComponent implements OnInit {
   }
 
   updateChartData() {
-    const currentDate = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    const currentDate = new Date().toISOString().split('T')[0];
     if (this.sellerId) {
       this.productViewService.getProductViewStatsForSeller(this.sellerId, currentDate).subscribe(
         (stats: ProductViewStats) => {
@@ -56,7 +56,6 @@ export class ProductViewsComponent implements OnInit {
         },
         (error: any) => {
           console.error('Error fetching product view stats:', error);
-          // Handle error (e.g., show error message to user)
         }
       );
     } else {

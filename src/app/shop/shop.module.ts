@@ -28,10 +28,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { ListShopComponent } from './list-shop/list-shop.component';
-import { NgxPaginationModule } from 'ngx-pagination'; 
+import { NgxPaginationModule } from 'ngx-pagination';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
+
+
+import { UtilModule } from 'src/app/util/util.module';
 
 
 
@@ -67,7 +70,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatDialogModule,
     MatDividerModule,
     ScrollingModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    UtilModule
 
 
 

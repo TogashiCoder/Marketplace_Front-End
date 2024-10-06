@@ -1,0 +1,36 @@
+<div class="analytics-container">
+  <h2 class="chart-title">Product Stock Distribution</h2>
+  <div class="chart-wrapper">
+    <ngx-charts-pie-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="chartData"
+      [gradient]="gradient"
+      [legend]="showLegend"
+      [labels]="showLabels"
+      [doughnut]="true">
+    </ngx-charts-pie-chart>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Stock Quantity</th>
+          <th>Price</th>
+          <th>total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of data;" style="background-color: #E0F2F1;">
+          <td>{{product.name}}</td>
+          <td>{{product.stockQuantity}}</td>
+          <td>{{product.price | currency}}</td>
+          <td>{{ product.price * product.stockQuantity | currency:'USD':'symbol':'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

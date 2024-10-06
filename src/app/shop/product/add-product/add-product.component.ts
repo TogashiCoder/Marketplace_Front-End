@@ -130,7 +130,7 @@ export class AddProductComponent implements OnInit {
   }
 
   onShowProducts(): void {
-    this.router.navigate(['/login']); // Adjust this route as needed
+    this.router.navigate(['/dashboard/products-management']);
   }
 
   get formControls() {

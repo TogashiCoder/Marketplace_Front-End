@@ -6,6 +6,7 @@ import { UtilComponent } from './util.component';
 import { RegistrationPromptComponent } from './registration-prompt/registration-prompt.component';
 import { TestUtilComponent } from './test-util/test-util.component';
 import { SuccessPopupComponent } from './success-popup/success-popup.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { SuccessPopupComponent } from './success-popup/success-popup.component';
     UtilComponent,
     RegistrationPromptComponent,
     TestUtilComponent,
-    SuccessPopupComponent
+    SuccessPopupComponent,
+    NavBarComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { SuccessPopupComponent } from './success-popup/success-popup.component';
   ],
   exports: [
     RegistrationPromptComponent,
-    SuccessPopupComponent
+    SuccessPopupComponent,
+    NavBarComponent
   ]
 })
 export class UtilModule { }

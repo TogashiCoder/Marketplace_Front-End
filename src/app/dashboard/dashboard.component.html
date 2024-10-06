@@ -34,24 +34,22 @@
 </ng-template>
 
 
- <!-- Seller Template -->
+<!-- Seller Template -->
 <ng-template #sellerSidebar>
   <aside class="sidebar" [ngClass]="{'sidebar-mobile': isMobile}" [@sidebarState]="sidebarClosed ? 'closed' : 'open'">
     <ul class="sidebar-nav">
       <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-      <li><a href="#"><i class="fas fa-box"></i> Orders</a></li>
-      <li><a href="#"><i class="fas fa-cube"></i> Products</a></li>
-      <li><a href="#"><i class="fas fa-warehouse"></i> Inventory Management</a></li>
-      <li><a href="#"><i class="fas fa-chart-line"></i> Sales Analytics</a></li>
+      <li><a routerLink="order-analyse"><i class="fas fa-box"></i> Orders</a></li>
+      <li><a routerLink="products-management"><i class="fas fa-cube"></i> Products</a></li>
+      <li><a routerLink="stock-analytics"><i class="fas fa-warehouse"></i>Stock Inventory</a></li>
+      <li><a routerLink="new-product"><i class="fas fa-tags"></i> New Products</a></li>
       <li><a routerLink="product-views"><i class="fas fa-chart-bar"></i> Product Views</a></li>
+      <li><a href="#"><i class="fas fa-chart-line"></i> Sales Analytics</a></li>
       <li><a href="#"><i class="fas fa-envelope"></i> Messages</a></li>
       <li><a href="#"><i class="fas fa-star"></i> Reviews & Ratings</a></li>
       <li><a href="#"><i class="fas fa-ticket-alt"></i> Coupons</a></li> <!-- New Coupons section -->
       <li><a href="#"><i class="fas fa-percent"></i> Promotions & Discounts</a></li>
-      <li><a href="#"><i class="fas fa-dollar-sign"></i> Payment & Payouts</a></li>
       <li><a href="#"><i class="fas fa-file-alt"></i> Reports</a></li>
-      <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
-      <li><a href="#"><i class="fas fa-life-ring"></i> Support</a></li>
     </ul>
   </aside>
 </ng-template>

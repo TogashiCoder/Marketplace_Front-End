@@ -10,12 +10,22 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { OrdersSectionComponent } from './orders-section/orders-section.component';
+import { StockAnalyticsComponent } from './stock-analytics/stock-analytics.component';
+import { ProductManagementComponent } from './product-management/product-management.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
     DashboardComponent,
     ProductViewsComponent,
     OrdersSectionComponent,
+    StockAnalyticsComponent,
+    ProductManagementComponent,
+    EditProductComponent,
   ],
   imports: [
     CommonModule,
@@ -24,7 +34,9 @@ import { OrdersSectionComponent } from './orders-section/orders-section.componen
     NgxChartsModule,
     MatCardModule,
     MatSelectModule,
-    NgxChartsModule
+    NgxChartsModule,
+    ReactiveFormsModule,
+    MatDialogModule
   ]
 })
 export class DashboardModule { }

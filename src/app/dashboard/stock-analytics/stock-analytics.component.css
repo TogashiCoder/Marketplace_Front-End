@@ -1,0 +1,94 @@
+.analytics-container {
+  background-color: #f7fafc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.chart-title {
+  color: #319795;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.table-wrapper {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.product-table th, .product-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.product-table th {
+  background-color: #319795;
+  color: white;
+}
+
+.product-table tr:hover {
+  background-color: #e6fffa !important;
+}
+
+::ng-deep .ngx-charts {
+  float: none;
+}
+
+::ng-deep .pie-label {
+  fill: #4a5568;
+}
+
+::ng-deep .pie-label-line {
+  stroke: #319795;
+}
+
+::ng-deep .legend-title-text {
+  color: #319795;
+}
+
+::ng-deep .legend-labels {
+  background-color: #f7fafc !important;
+}
+
+::ng-deep .legend-label-text {
+  color: #4a5568;
+}
+
+::ng-deep .legend-label-color {
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .chart-wrapper {
+    height: 300px;
+  }
+
+  .product-table {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-wrapper {
+    height: 250px;
+  }
+
+  .product-table {
+    font-size: 12px;
+  }
+}

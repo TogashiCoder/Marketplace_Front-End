@@ -1,0 +1,82 @@
+<div class="container mx-auto p-4 max-w-[1200px]">
+  <h1 class="text-2xl font-bold mb-4 text-[#4a5568]">Product Management</h1>
+  <div class="overflow-x-auto bg-[#f7fafc] rounded-lg p-8">
+    <div *ngIf="loading" class="text-center py-4">
+      <p>Loading products...</p>
+    </div>
+    <div *ngIf="error" class="text-center py-4 text-red-600">
+      {{ error }}
+    </div>
+    <table *ngIf="!loading && !error && products.length > 0" class="min-w-full">
+      <thead>
+        <tr class="bg-[#319795]">
+          <th class="text-white px-4 py-2">Image</th>
+          <th class="text-white px-4 py-2">Name</th>
+          <th class="text-white px-4 py-2">Price</th>
+          <th class="text-white px-4 py-2">Stock</th>
+          <th class="text-white px-4 py-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products" class="bg-white">
+          <td class="px-4 py-2">
+            <img [src]="product.imageUrls[0] || '/assets/placeholder.svg'" [alt]="product.name" width="50" height="50" class="rounded-md">
+          </td>
+          <td class="text-[#4a5568] px-4 py-2">{{ product.name }}</td>
+          <td class="text-[#4a5568] px-4 py-2">{{ product.price | currency }}</td>
+          <td class="text-[#4a5568] px-4 py-2">{{ product.stockQuantity }}</td>
+          <td class="px-4 py-2">
+            <div class="flex space-x-2">
+              <button (click)="handleEdit(product.id)" class="bg-[#e6fffa] text-[#319795] border-[#319795] hover:bg-[#319795] hover:text-white p-2 rounded">
+                <i class="fas fa-pencil-alt"></i>
+                <span class="sr-only">Edit</span>
+              </button>
+              <button (click)="handleDelete(product.id)" class="bg-[#319795] text-white hover:bg-[#2c7a7b] p-2 rounded">
+                <i class="fas fa-trash"></i>
+                <span class="sr-only">Delete</span>
+              </button>
+              <button (click)="openDialog(product)" class="bg-[#e6fffa] text-[#319795] border-[#319795] hover:bg-[#319795] hover:text-white p-2 rounded">
+                <i class="fas fa-eye"></i>
+                <span class="sr-only">View</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!loading && !error && products.length === 0" class="text-center py-4">
+      <p>No products found. Start adding some!</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedProduct" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg max-w-xl w-full p-4" >
+    <div class="bg-[#319795] text-white p-4 rounded-t-lg">
+      <h2 class="text-xl font-bold">{{ selectedProduct.name }}</h2>
+    </div>
+    <div class="p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <img [src]="selectedProduct.imageUrls[0] || '/assets/placeholder.svg'" [alt]="selectedProduct.name" class="rounded-md w-full">
+        </div>
+        <div class="space-y-2 text-[#4a5568]">
+          <p><strong>Description:</strong> {{ selectedProduct.description }}</p>
+          <p><strong>Price:</strong> {{ selectedProduct.price | currency }}</p>
+          <p><strong>Stock Quantity:</strong> {{ selectedProduct.stockQuantity }}</p>
+          <p><strong>Minimum Order:</strong> {{ selectedProduct.minimumOrderQuantity }}</p>
+          <p><strong>Discount:</strong> {{ selectedProduct.discountPercentage ? (selectedProduct.discountPercentage | percent) : 'N/A' }}</p>
+          <p><strong>Rating:</strong> {{ selectedProduct.rating !== null && selectedProduct.rating !== undefined ? selectedProduct.rating : 'N/A' }}</p>
+          <p><strong>Category:</strong> {{ selectedProduct.categoryName }}</p>
+          <p><strong>Created At:</strong> {{ selectedProduct.createdAt | date:'medium' }}</p>
+          <p><strong>Updated At:</strong> {{ selectedProduct.updatedAt | date:'medium' }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-gray-100 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg">
+      <button (click)="closeDialog()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#319795] text-base font-medium text-white hover:bg-[#2c7a7b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#319795] sm:ml-3 sm:w-auto sm:text-sm">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

@@ -24,17 +24,24 @@
                 <ion-icon name="person-outline"></ion-icon>
               </button>
 
-              <button class="action-btn">
+                <button class="action-btn" (click)="onFavoriteClick()">
                 <ion-icon name="heart-outline"></ion-icon>
                 <span class="count">0</span>
-              </button>
+                </button>
 
-              <button class="action-btn">
+
+                <button class="action-btn" (click)="onBasketClick()">
                 <ion-icon name="bag-handle-outline"></ion-icon>
                 <span class="count">0</span>
               </button>
 
             </div>
+
+
+
+
+
+
 
           </div>
 
@@ -42,3 +49,11 @@
   </header>
 
 
+
+  <app-registration-prompt
+  [show]="showRegistrationPrompt"
+  [message]="registrationPromptMessage"
+  [actionType]="registrationPromptAction"
+  (register)="onRegister()"
+  (close)="onCloseRegistrationPrompt()">
+</app-registration-prompt>

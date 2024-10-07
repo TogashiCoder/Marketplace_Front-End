@@ -1,0 +1,28 @@
+<div class="rating-component">
+  <h2>Reviews</h2>
+
+  <div *ngIf="canRate">
+    <form [formGroup]="ratingForm" (ngSubmit)="submitRating()">
+      <label class="rating-label">Your Rating</label>
+      <div class="star-rating">
+        <span *ngFor="let star of stars; let i = index"
+              (mouseenter)="hoverRating(i)"
+              (mouseleave)="hoverRating(-1)"
+              (click)="setRating(i)"
+              [@starAnimation]="star">
+          &#9733;
+        </span>
+      </div>
+      <label class="rating-label">Your Review</label>
+      <textarea formControlName="comment" placeholder="Write your review here..."></textarea>
+      <button type="submit" [disabled]="ratingForm.invalid">Submit Rating</button>
+    </form>
+  </div>
+
+  <div *ngIf="!canRate" class="cannot-rate-message" >
+    <p>You can only rate products you've purchased and haven't rated yet.</p>
+  </div>
+
+  <div *ngIf="message" class="message">{{ message }}</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+</div>

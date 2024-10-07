@@ -1,0 +1,62 @@
+<div class="reviews-container">
+  <h2>Customer Reviews</h2>
+
+  <div class="review-stats" *ngIf="reviews.length > 0">
+    <div class="average-rating">
+      <div class="rating-number">{{ averageRating.toFixed(1) }}</div>
+      <div class="star-rating">
+        <ng-container *ngFor="let star of [1,2,3,4,5]">
+          <span [class.filled]="star <= averageRating">★</span>
+        </ng-container>
+      </div>
+      <div class="total-reviews">Based on {{ reviews.length }} reviews</div>
+    </div>
+  </div>
+
+  <div class="reviews-list">
+    <div *ngFor="let review of reviews" class="review-card">
+      <div class="review-header">
+        <img [src]="review.buyerProfilImageUrl" [alt]="review.buyerName" class="reviewer-image">
+        <div class="reviewer-info">
+          <div class="reviewer-name">{{ review.buyerName }}</div>
+          <div class="review-date">{{ review.createdAt | date:'mediumDate' }}</div>
+        </div>
+      </div>
+
+      <!-- <div class="star-rating">
+        <ng-container *ngFor="let star of [1,2,3,4,5]" >
+          <span [class.filled]="star <= review.value">★
+
+          </span>
+        </ng-container>
+      </div> -->
+
+      <div class="my-star-rating">
+        <ng-container *ngFor="let star of [1,2,3,4,5]">
+          <span [class.filled]="star <= review.value">
+            <svg
+              class="star"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="currentColor">
+              <path
+                d="M12 .587l3.668 7.431 8.21 1.179-5.938 5.805 1.401 8.178L12 18.896l-7.341 3.868 1.4-8.178L.12 9.197l8.211-1.179z" />
+            </svg>
+          </span>
+        </ng-container>
+      </div>
+
+
+
+      <div class="review-comment">
+        {{ review.comment }}
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="reviews.length === 0" class="no-reviews">
+    No reviews yet. Be the first to review this product!
+  </div>
+</div>

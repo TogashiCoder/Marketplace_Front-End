@@ -8,6 +8,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 

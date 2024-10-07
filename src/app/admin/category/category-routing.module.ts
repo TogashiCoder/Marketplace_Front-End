@@ -7,8 +7,8 @@ import { SubcategoryCreationComponent } from './subcategory-creation/subcategory
 
 const routes: Routes = [
   { path: '', component: CategoryComponent },
-  { path:'newcategory', component:CategoryCreationComponent,canActivate:[authGuard],data: {role:'ADMIN'},},
-  { path:'newSubCategory',component:SubcategoryCreationComponent,canActivate:[authGuard],data: {role:'ADMIN'},}
+  // { path:'newcategory', component:CategoryCreationComponent,canActivate:[authGuard],data: {role:'ADMIN'},},
+  // { path:'newCategory',component:SubcategoryCreationComponent,canActivate:[authGuard],data: {role:'ADMIN'},}
 ];
 
 @NgModule({

@@ -44,4 +44,13 @@ export class OrderService {
   updateSellerOrderStatus(sellerId: number, orderId: number, status: string): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/seller/${sellerId}/order/${orderId}/status/${status}`, null);
   }
+
+
+    // Check if a buyer has purchased a product
+    hasBuyerPurchasedProduct(buyerId: number, productId: number): Observable<boolean> {
+      return this.http.get<boolean>(`${this.apiUrl}/buyer/${buyerId}/product/${productId}/purchased`);
+    }
+
+
+
 }

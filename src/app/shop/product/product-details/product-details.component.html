@@ -132,3 +132,8 @@
 (register)="onRegister()"
 (close)="onCloseRegistrationPrompt()">
 </app-registration-prompt>
+
+
+<app-product-rating [productId]="product.id" [sellerId]="product.sellerId"></app-product-rating>
+
+<app-reviews [productId]="product.id"></app-reviews>

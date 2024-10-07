@@ -1,0 +1,159 @@
+.rating-component {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-left: 100px;
+  margin-right: 100px;
+
+}
+
+.rating-component h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #008080;
+}
+
+.star-rating {
+  font-size: 24px;
+  color: #ddd;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.star-rating span {
+  display: inline-block;
+  transition: transform 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.star-rating span:hover {
+  transform: scale(1.1);
+}
+
+.star-rating span.filled {
+  color: #ffd700;  /* Kept yellow for filled stars */
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #008080;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+button {
+  padding: 12px 20px;
+  background-color: #008080;  /* Kept teal for button background */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #006666;  /* Darker teal on hover */
+}
+
+button:disabled {
+  background-color: #e0e0e0;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.message {
+  color: #4caf50;  /* Kept green for success messages */
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.error {
+  color: #f44336;  /* Kept red for error messages */
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* New styles to match product details green theme */
+.rating-component {
+  border: 1px solid #008080;  /* Teal border to match product details */
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #006666;  /* Darker teal on focus */
+  box-shadow: 0 0 0 2px rgba(0, 128, 128, 0.2);  /* Teal shadow on focus */
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 128, 128, 0.2);  /* Teal shadow on focus */
+}
+
+/* Additional style for consistency */
+.rating-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #008080;  /* Teal color for labels */
+  margin-bottom: 5px;
+}
+
+
+
+/* Styling for the message when user cannot rate */
+.cannot-rate-message {
+  background-color: #e6f3f3;
+  border: 1px solid #008080; 
+  border-radius: 4px;
+  padding: 15px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+.cannot-rate-message p {
+  margin: 0;
+  color: #006666; /* Dark teal text */
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.cannot-rate-message::before {
+  content: '\2139'; /* Information symbol */
+  font-size: 24px;
+  color: #008080; /* Teal color */
+  margin-right: 15px;
+  font-weight: bold;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .cannot-rate-message {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cannot-rate-message::before {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}

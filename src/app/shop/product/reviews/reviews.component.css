@@ -1,0 +1,162 @@
+.reviews-container {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  margin: 30px 100px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #008080;
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #008080;
+}
+
+.review-stats {
+  background-color: #e6f3f3;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #008080;
+}
+
+.average-rating {
+  text-align: center;
+}
+
+.rating-number {
+  font-size: 48px;
+  font-weight: bold;
+  color: #008080;
+}
+
+.star-rating {
+  margin: 10px 0;
+  font-size: 24px;
+  color: #ddd;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.star-rating span {
+  display: inline-block;
+  transition: transform 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.star-rating span.filled {
+  color: #ffd700;
+}
+
+.total-reviews {
+  color: #555;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.review-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  border: 1px solid #e0e0e0;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.reviewer-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.reviewer-info {
+  flex-grow: 1;
+}
+
+.reviewer-name {
+  font-weight: 500;
+  color: #008080;
+}
+
+.review-date {
+  font-size: 12px;
+  color: #666;
+}
+
+.review-comment {
+  color: #555;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-top: 10px;
+}
+
+.no-reviews {
+  text-align: center;
+  padding: 40px;
+  color: #555;
+  background-color: #e6f3f3;
+  border-radius: 8px;
+  border: 1px solid #008080;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .reviews-container {
+    margin: 20px;
+    padding: 15px;
+  }
+
+  .review-stats {
+    padding: 15px;
+  }
+
+  .rating-number {
+    font-size: 36px;
+  }
+
+  .star-rating {
+    font-size: 20px;
+  }
+}
+
+
+
+
+
+.my-star-rating span {
+  display: inline-block;
+  color: gray; /* Default color for empty stars */
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.my-star-rating .filled {
+  color: gold; /* Color for filled stars */
+}
+
+.my-star-rating span:hover .star {
+  transform: scale(1.2); /* Enlarge the star on hover */
+  color: orange; /* Optional: change color when hovered */
+}
+
+.star {
+  transition: transform 0.3s ease-in-out, fill 0.3s ease-in-out; /* Smooth motion */
+  cursor: pointer; /* Optional: Change to pointer when hovered */
+}
+
+.star:hover {
+  fill: orange; /* Change fill color on hover */
+}

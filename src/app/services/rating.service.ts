@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Rating } from '../models/Rating';
 import { Product } from '../models/Product';
+import { ReviewDto } from '../models/ReviewDto';
 
 @Injectable({
   providedIn: 'root'
@@ -66,4 +67,18 @@ export class RatingService {
   getMostFavoritedProducts(limit: number = 10): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/most-favorited?limit=${limit}`);
   }
+
+
+    // Check if a buyer can rate a product
+    canRateProduct(productId: number, buyerId: number): Observable<boolean> {
+      return this.http.get<boolean>(`${this.apiUrl}/can-rate/product/${productId}/buyer/${buyerId}`);
+    }
+
+
+    // Get reviews for a product by product ID
+  getReviewsForProduct(productId: number): Observable<ReviewDto[]> {
+    return this.http.get<ReviewDto[]>(`${this.apiUrl}/reviews/product/${productId}`);
+  }
+
+
 }

@@ -8,6 +8,8 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { FormsModule } from '@angular/forms';
 import { UtilModule } from 'src/app/util/util.module';
+import { ProductRatingComponent } from './product-rating/product-rating.component';
+import { ReviewsComponent } from './reviews/reviews.component';
 
 
 
@@ -16,7 +18,9 @@ import { UtilModule } from 'src/app/util/util.module';
   declarations: [
     ProductComponent,
     AddProductComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ProductRatingComponent,
+    ReviewsComponent
   ],
   imports: [
     CommonModule,

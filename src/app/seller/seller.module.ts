@@ -5,18 +5,24 @@ import { SellerRoutingModule } from './seller-routing.module';
 import { SellerComponent } from './seller.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CouponCreattionComponent } from './coupon-creattion/coupon-creattion.component';
 
 
+import { FormsModule } from '@angular/forms';
+import { CouponDetailsComponent } from './coupon-details/coupon-details.component';
 
 @NgModule({
   declarations: [
     SellerComponent,
-    RegisterComponent
+    RegisterComponent,
+    CouponCreattionComponent,
+    CouponDetailsComponent
   ],
   imports: [
     CommonModule,
     SellerRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class SellerModule { }

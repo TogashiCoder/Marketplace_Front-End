@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { UtilModule } from 'src/app/util/util.module';
 import { ProductRatingComponent } from './product-rating/product-rating.component';
 import { ReviewsComponent } from './reviews/reviews.component';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 
@@ -27,7 +27,8 @@ import { ReviewsComponent } from './reviews/reviews.component';
     ProductRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    UtilModule
+    UtilModule,
+    MatAutocompleteModule
   ]
 })
 export class ProductModule { }

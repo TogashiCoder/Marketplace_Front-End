@@ -1,0 +1,148 @@
+<div class="flex flex-col lg:flex-row gap-8 p-6 max-w-4xl mx-auto font-sans text-gray-800">
+  <!-- Form Card -->
+  <div class="flex-1 rounded-lg border bg-card text-card-foreground shadow-md">
+    <div class="p-6 space-y-1.5">
+      <h3 class="text-2xl font-semibold text-gray-900">Create Product Coupon</h3>
+      <p class="text-sm text-gray-500">Enter the details for your new product coupon.</p>
+    </div>
+
+    <div class="p-6 space-y-4">
+      <div class="space-y-2">
+        <label for="code" class="text-sm font-medium">Coupon Code</label>
+        <input
+          id="code"
+          [(ngModel)]="coupon.code"
+          class="flex h-10 w-full rounded-md border border-gray-300 bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          [class.border-red-500]="validationErrors.code"
+        />
+        <span *ngIf="validationErrors.code" class="text-sm text-red-500">
+          {{ validationErrors.code }}
+        </span>
+      </div>
+
+      <div class="space-y-2">
+        <label for="discountPercentage" class="text-sm font-medium">Discount Percentage</label>
+        <input
+          id="discountPercentage"
+          type="number"
+          min="0"
+          max="100"
+          step="0.1"
+          [(ngModel)]="coupon.discountPercentage"
+          class="flex h-10 w-full rounded-md border border-gray-300 bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          [class.border-red-500]="validationErrors.discountPercentage"
+        />
+        <span *ngIf="validationErrors.discountPercentage" class="text-sm text-red-500">
+          {{ validationErrors.discountPercentage }}
+        </span>
+      </div>
+
+      <div class="space-y-2">
+        <label for="startDate" class="text-sm font-medium">Start Date</label>
+        <input
+          id="startDate"
+          type="date"
+          [min]="getMinDate()"
+          [(ngModel)]="coupon.startDate"
+          (change)="onStartDateChange($event)"
+          class="flex h-10 w-full rounded-md border border-gray-300 bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          [class.border-red-500]="validationErrors.startDate"
+        />
+        <span *ngIf="validationErrors.startDate" class="text-sm text-red-500">
+          {{ validationErrors.startDate }}
+        </span>
+      </div>
+
+      <div class="space-y-2">
+        <label for="endDate" class="text-sm font-medium">End Date</label>
+        <input
+          id="endDate"
+          type="date"
+          [min]="getMinEndDate()"
+          [(ngModel)]="coupon.endDate"
+          (change)="onEndDateChange($event)"
+          class="flex h-10 w-full rounded-md border border-gray-300 bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          [class.border-red-500]="validationErrors.endDate"
+        />
+        <span *ngIf="validationErrors.endDate" class="text-sm text-red-500">
+          {{ validationErrors.endDate }}
+        </span>
+      </div>
+
+      <div class="space-y-2">
+        <label for="maxRedemptions" class="text-sm font-medium">Max Redemptions</label>
+        <input
+          id="maxRedemptions"
+          type="number"
+          min="1"
+          [(ngModel)]="coupon.maxRedemptions"
+          class="flex h-10 w-full rounded-md border border-gray-300 bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          [class.border-red-500]="validationErrors.maxRedemptions"
+        />
+        <span *ngIf="validationErrors.maxRedemptions" class="text-sm text-red-500">
+          {{ validationErrors.maxRedemptions }}
+        </span>
+      </div>
+    </div>
+
+    <div class="p-6 pt-0">
+      <button
+      (click)="createCoupon()"
+      class="w-full bg-teal-600 hover:bg-teal-700 text-white h-10 px-4 py-2 rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed"
+      [disabled]="!isFormValid()">
+      Create Coupon
+    </button>
+    </div>
+
+    <div *ngIf="message"
+         [class]="messageType === 'success' ? 'text-green-600' : 'text-red-600'"
+         class="px-6 py-2 text-center">
+      {{ message }}
+    </div>
+  </div>
+
+  <!-- Preview Card -->
+  <div class="flex-1 rounded-lg border bg-gradient-to-br from-teal-500 to-teal-700 text-white shadow-lg">
+    <div class="p-6 space-y-1.5">
+      <h3 class="text-2xl font-bold">Coupon Preview</h3>
+    </div>
+    <div class="p-6 space-y-4">
+      <div [class]="coupon.code ? 'text-4xl font-extrabold text-center bg-white text-transparent bg-clip-text' : 'text-4xl font-extrabold text-center text-white/50'">
+        {{ coupon.code || 'ENTER CODE' }}
+      </div>
+
+      <div class="text-center text-3xl font-bold">
+        {{ coupon.discountPercentage }}% OFF
+      </div>
+
+      <div class="text-center">
+        Valid from {{ formatDate(coupon.startDate) }} to {{ formatDate(coupon.endDate) }}
+      </div>
+
+      <div class="text-center text-sm">
+        Limited to {{ coupon.maxRedemptions }} redemptions
+      </div>
+
+      <!-- <div class="flex justify-center items-center space-x-4 mt-4">
+        <div class="flex items-center">
+          <i class="fas fa-star text-yellow-400 mr-1"></i>
+          <span class="font-semibold">4.5</span>
+        </div>
+        <div class="flex items-center">
+          <i class="fas fa-heart text-red-400 mr-1"></i>
+          <span class="font-semibold">2.5k</span>
+        </div>
+        <div class="flex items-center">
+          <i class="fas fa-eye text-blue-400 mr-1"></i>
+          <span class="font-semibold">10k daily</span>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="flex justify-center p-6 pt-0">
+      <div class="text-xs opacity-75">
+        Terms and conditions apply
+      </div>
+    </div>
+  </div>
+</div>

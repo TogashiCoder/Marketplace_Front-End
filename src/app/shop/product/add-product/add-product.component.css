@@ -217,3 +217,25 @@ button {
   font-size: 0.875rem;
   margin-top: 0.25rem;
 }
+
+
+.category-search-container {
+  position: relative;
+}
+
+.category-search-container input {
+  width: 100%;
+  padding-right: 30px;
+}
+
+.selected-category {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #4a5568;
+}
+
+mat-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+}

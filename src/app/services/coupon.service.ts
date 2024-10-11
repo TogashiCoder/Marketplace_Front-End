@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CouponDto } from '../models/CouponDto';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +11,43 @@ export class CouponService {
 
   constructor(private http: HttpClient) { }
 
-  validateCoupon(couponCode: string, productId: number): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/validate/${couponCode}/product/${productId}`);
+  createCoupon(couponDto: CouponDto, sellerId: number): Observable<CouponDto> {
+    return this.http.post<CouponDto>(`${this.apiUrl}/seller/${sellerId}`, couponDto);
   }
 
-  applyCouponToProduct(couponId: number, productId: number, buyerId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${couponId}/apply/product/${productId}/buyer/${buyerId}`, {});
+  updateCoupon(id: number, couponDto: CouponDto): Observable<CouponDto> {
+    return this.http.put<CouponDto>(`${this.apiUrl}/${id}`, couponDto);
   }
 
-  getCouponByCode(code: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/code/${code}`);
+  getAllCouponsBySeller(sellerId: number): Observable<CouponDto[]> {
+    return this.http.get<CouponDto[]>(`${this.apiUrl}/seller/${sellerId}`);
   }
 
-  removeCouponFromProduct(couponId: number, productId: number): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/${couponId}/product/${productId}/remove`, {});
+  applyCouponToProduct(couponId: number, productId: number, buyerId: number): Observable<CouponDto> {
+    return this.http.post<CouponDto>(`${this.apiUrl}/${couponId}/apply/${productId}/buyer/${buyerId}`, {});
+  }
+
+  removeCouponFromProduct(productId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/product/${productId}`);
+  }
+
+  deleteCoupon(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  deleteCouponByCode(code: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/code/${code}`);
+  }
+
+  getCouponById(id: number): Observable<CouponDto> {
+    return this.http.get<CouponDto>(`${this.apiUrl}/${id}`);
+  }
+
+  getCouponByCode(code: string): Observable<CouponDto> {
+    return this.http.get<CouponDto>(`${this.apiUrl}/code/${code}`);
+  }
+
+  removeCouponFromCartItem(cartItemId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/cartItem/${cartItemId}`);
   }
 }

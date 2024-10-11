@@ -35,7 +35,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 import { UtilModule } from 'src/app/util/util.module';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -71,7 +71,8 @@ import { UtilModule } from 'src/app/util/util.module';
     MatDividerModule,
     ScrollingModule,
     NgxPaginationModule,
-    UtilModule
+    UtilModule,
+    MatAutocompleteModule
 
 
 

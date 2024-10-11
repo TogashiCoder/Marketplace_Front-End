@@ -15,9 +15,14 @@ export class ShoppingCartService {
     return this.http.get(`${this.API_URL}/buyer/${buyerId}`);
   }
 
-  addItemToCart(cartId: number, productId: number, quantity: number): Observable<any> {
-    return this.http.post(`${this.API_URL}/${cartId}/add-item/${productId}/${quantity}`, {});
-  }
+  // addItemToCart(cartId: number, productId: number, quantity: number): Observable<any> {
+  //   return this.http.post(`${this.API_URL}/${cartId}/add-item/${productId}/${quantity}`, {});
+  // }
+
+  addItemToCart(cartId: number, productId: number, quantity: number): Observable<boolean> {
+    return this.http.post<boolean>(`${this.API_URL}/${cartId}/add-item/${productId}/${quantity}`, {});
+}
+
 
   removeItemFromCart(cartId: number, itemId: number): Observable<any> {
     return this.http.delete(`${this.API_URL}/${cartId}/remove-item/${itemId}`);

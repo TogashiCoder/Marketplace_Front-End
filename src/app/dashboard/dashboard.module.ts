@@ -16,7 +16,10 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSelectModule,
     NgxChartsModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule,
+    MatAutocompleteModule
   ]
 })
 export class DashboardModule { }

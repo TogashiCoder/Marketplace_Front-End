@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Seller } from 'src/app/models/Seller';
 import { RatingService } from 'src/app/services/rating.service';
 import { FollowingService } from 'src/app/services/following.service';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-shop-profil-footer',
@@ -11,12 +12,14 @@ import { FollowingService } from 'src/app/services/following.service';
 export class ShopProfilFooterComponent implements OnChanges {
   public rating: number = 0;
   public followerCount: number = 0;
+  public orderCount: number = 0;
 
   @Input() seller!: Seller;
 
   constructor(
     private ratingService: RatingService,
-    private followingService: FollowingService 
+    private followingService: FollowingService,
+    private orderService:OrderService
   ) {}
 
   // This method will trigger when the @Input() seller changes
@@ -29,9 +32,12 @@ export class ShopProfilFooterComponent implements OnChanges {
       this.getRating();
       // Fetch the follower count when seller data is available
       this.getFollowerCount();
+      this.getOrderNumber();
+      console.log("ffffffffffffffffffffff",this.getOrderNumber())
     } else {
       console.error("Seller is undefined");
     }
+
   }
 
   private getRating(): void {
@@ -60,4 +66,22 @@ export class ShopProfilFooterComponent implements OnChanges {
       );
     }
   }
+
+
+
+  //get order number for a shop
+  private getOrderNumber(): void {
+    if (this.seller?.id) {
+      this.orderService.getOrderNumberBySellerId(this.seller.id).subscribe(
+        (data: number) => {
+          this.orderCount = data;
+        },
+        error => {
+          console.error('Error fetching order number:', error);
+        }
+      );
+    }
+  }
+
+
 }

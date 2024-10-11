@@ -44,7 +44,7 @@ import { JwtModule } from '@auth0/angular-jwt';
      //My Modules
      UtilModule,
      //Interceptor
-     JwtModule.forRoot({
+     JwtModule.forRoot({ 
       config: {
         tokenGetter: () => localStorage.getItem('jwt_token'),
         allowedDomains: ['http://localhost:8080/login'],

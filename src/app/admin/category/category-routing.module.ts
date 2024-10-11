@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: '', component: CategoryComponent },
   // { path:'newcategory', component:CategoryCreationComponent,canActivate:[authGuard],data: {role:'ADMIN'},},
   // { path:'newCategory',component:SubcategoryCreationComponent,canActivate:[authGuard],data: {role:'ADMIN'},}
+      { path:'createCategory',component:SubcategoryCreationComponent,canActivate:[authGuard],data: {role:'ADMIN'},}
 ];
 
 @NgModule({

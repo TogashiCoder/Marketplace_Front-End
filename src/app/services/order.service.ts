@@ -53,4 +53,12 @@ export class OrderService {
 
 
 
+
+
+
+    getOrderNumberBySellerId(sellerId: number): Observable<number> {
+      return this.http.get<number>(`${this.apiUrl}/count/orderNumber/by/seller/${sellerId}`);
+    }
+
+
 }

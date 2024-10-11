@@ -1,0 +1,175 @@
+:host {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  font-family: 'Poppins', sans-serif;
+}
+
+.container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  /* margin-top: 5%; */
+}
+
+.seller-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.seller-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  margin-right: 1.5rem;
+  background-size: cover;
+  background-position: center;
+}
+
+.seller-details h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+  color: #212529;
+}
+
+.seller-rating {
+  display: flex;
+  align-items: center;
+}
+
+.star-icon {
+  color: #ffc107;
+  margin-right: 0.25rem;
+}
+
+.rating-value {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-right: 0.5rem;
+}
+
+.review-count {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section-title {
+  font-size: 1.4rem;
+  color: #343a40;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.rating-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.star-label {
+  width: 60px;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.progress-bar {
+  flex-grow: 1;
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #008080;
+  border-radius: 4px;
+}
+
+.percentage {
+  width: 40px;
+  text-align: right;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.product-item {
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.product-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
+
+.product-summary:hover {
+  background-color: #e9ecef;
+}
+
+.product-name {
+  font-weight: 600;
+  color: #495057;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+}
+
+.product-details {
+  padding: 1rem;
+  background-color: #ffffff;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.view-reviews-btn {
+  display: inline-flex;
+  align-items: center;
+  color: #008080;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.view-reviews-btn:hover {
+  color: #006666;
+}
+
+.chevron-icon {
+  margin-left: 0.25rem;
+  transition: transform 0.2s ease;
+}
+
+details[open] .chevron-icon {
+  transform: rotate(180deg);
+}

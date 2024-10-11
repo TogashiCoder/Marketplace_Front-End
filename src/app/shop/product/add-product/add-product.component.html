@@ -39,7 +39,9 @@
             <span class="error-message" *ngIf="formControls['stockQuantity'].touched && formControls['stockQuantity'].errors?.['min']">Stock quantity must be at least 0.</span>
           </div>
         </div>
-        <div class="form-group">
+
+
+        <!-- <div class="form-group">
           <label for="categoryId">Category</label>
           <select id="categoryId" formControlName="categoryId" required>
             <option value="" disabled selected>Select a category</option>
@@ -48,7 +50,30 @@
             </option>
           </select>
           <span class="error-message" *ngIf="formControls['categoryId'].touched && formControls['categoryId'].errors?.['required']">Category is required.</span>
+        </div> -->
+        <div class="form-group">
+          <label for="categorySearch">Category</label>
+          <div class="category-search-container">
+            <input
+              id="categorySearch"
+              formControlName="categorySearch"
+              type="text"
+              placeholder="Search for a category"
+              [matAutocomplete]="auto"
+              required
+            >
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectCategory($event.option.value)">
+              <mat-option *ngFor="let category of filteredCategories$ | async" [value]="category">
+                {{ category.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+          <span class="selected-category" *ngIf="selectedCategory">
+            Selected: {{ selectedCategory.name }}
+          </span>
+          <span class="error-message" *ngIf="formControls['categorySearch'].touched && formControls['categorySearch'].errors?.['required']">Category is required.</span>
         </div>
+
         <div class="form-group">
           <label for="images">Images (required)</label>
           <div class="file-input-wrapper">

@@ -5,7 +5,7 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CouponService } from 'src/app/services/coupon.service';
 import { switchMap, finalize } from 'rxjs/operators';
-
+import { CouponDto } from 'src/app/models/CouponDto';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -34,7 +34,6 @@ export class ShoppingCartComponent implements OnInit {
     private shoppingCartService: ShoppingCartService,
     private authService: AuthService,
     private couponService: CouponService
-
   ) { }
 
   ngOnInit(): void {
@@ -82,11 +81,9 @@ export class ShoppingCartComponent implements OnInit {
     }
   }
 
-  updateQuantity(itemId: number, newQuantity: number): void
-  {
+  updateQuantity(itemId: number, newQuantity: number): void {
     console.log("invoke updateQuantity")
     if (this.cartId) {
-
       const item = this.cartItems.find(i => i.id === itemId);
       if (item) {
         const oldQuantity = item.quantity;
@@ -137,14 +134,13 @@ export class ShoppingCartComponent implements OnInit {
 
     this.couponService.getCouponByCode(couponCode)
       .pipe(
-        switchMap(coupon =>
-          this.couponService.applyCouponToProduct(coupon.id, item.productId, this.buyerId!)
+        switchMap((coupon: CouponDto) =>
+          this.couponService.applyCouponToProduct(coupon.id!, item.productId, this.buyerId!)
         ),
         finalize(() => this.isLoading = false)
       )
       .subscribe(
-        (response) => {
-          // Update the cart item with new discounted price
+        (response: CouponDto) => {
           this.loadCartItems(); // Reload cart items to get updated prices
         },
         error => {
@@ -156,12 +152,12 @@ export class ShoppingCartComponent implements OnInit {
 
   removeCoupon(itemId: number): void {
     const item = this.cartItems.find(i => i.id === itemId);
-    if (!item || !item.appliedCouponId) return;
+    if (!item) return;
 
     this.isLoading = true;
     delete this.couponErrors[itemId];
 
-    this.couponService.removeCouponFromProduct(item.appliedCouponId, item.productId)
+    this.couponService.removeCouponFromProduct(item.productId)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe(
         () => {

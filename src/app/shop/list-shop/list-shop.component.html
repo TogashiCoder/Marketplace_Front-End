@@ -1,32 +1,52 @@
 <app-nav-bar></app-nav-bar>
 <div class="container">
-  <div class="search-filter">
-    <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterProducts()" placeholder="Search products..." class="search-input">
-    <select [(ngModel)]="selectedCategory" (ngModelChange)="filterProducts()" class="category-select">
-      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-    </select>
+  <div class="search-filter searchBar">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="filterProducts()"
+      placeholder="Search products"
+      class="search-input"
+    >
+
+    <mat-form-field appearance="outline" class="category-select">
+      <input
+        type="text"
+        placeholder="Select category"
+        matInput
+        [formControl]="categoryControl"
+        [matAutocomplete]="auto"
+      >
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCategorySelected($event)">
+        <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
   </div>
 
   <div class="product-list">
-    <div *ngFor="let product of filteredProducts | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" class="product-card" style="height: 300px;">
+    <div *ngFor="let product of filteredProducts | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }"
+         class="product-card">
       <img [src]="product.imageUrls[0]" [alt]="product.name" class="product-image">
       <div class="product-info">
-        <h3 style="font-weight: bolder;">{{ product.categoryName }}</h3>
+        <h3 class="category-name">{{ product.categoryName }}</h3>
         <a [routerLink]="['/shop/product/details', product.id]" class="product-name">{{product.name}}</a>
-        <p class="product-description"  >{{ product.description }}</p>
+        <p class="product-description">{{ product.description }}</p>
         <div class="product-price-rating">
           <span class="product-price">{{ product.price | currency }}</span>
           <div class="product-rating">
             <i class="fas fa-star" *ngFor="let star of [1, 2, 3, 4, 5]"
-            [ngClass]="{'filled': star <= (product?.rating || 3)}"></i>
-                   </div>
+               [ngClass]="{'filled': star <= (product?.rating || 3)}"></i>
+          </div>
         </div>
-        <button class="primary-button add-to-cart-btn" [routerLink]="['/shop/product/details', product.id]" >Show Details</button>
+        <button class="primary-button add-to-cart-btn" [routerLink]="['/shop/product/details', product.id]">
+          Show Details
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Pagination controls -->
   <div class="pagination-controls">
     <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
   </div>

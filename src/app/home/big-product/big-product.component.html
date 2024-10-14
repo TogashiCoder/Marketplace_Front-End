@@ -12,44 +12,48 @@
         <div class="showcase">
 
           <div class="showcase-banner">
-            <img src="assets/home/images/products/shampoo.jpg" alt="shampoo, conditioner & facewash packs" class="showcase-img">
+            <img [src]="product1.imageUrls[0]" alt="shampoo, conditioner & facewash packs" class="showcase-img">
           </div>
 
           <div class="showcase-content">
 
             <div class="showcase-rating">
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star-outline"></ion-icon>
+              <ion-icon name="star-outline"></ion-icon>
+              <ion-icon name="star-outline"></ion-icon>
               <ion-icon name="star-outline"></ion-icon>
               <ion-icon name="star-outline"></ion-icon>
             </div>
 
             <a href="#">
-              <h3 class="showcase-title">shampoo, conditioner & facewash packs</h3>
+              <!-- <h3 class="showcase-title">shampoo, conditioner & facewash packs</h3> -->
+              <h3 class="showcase-title">{{product1.name}}</h3>
             </a>
 
-            <p class="showcase-desc">
+            <!-- <p class="showcase-desc">
               Lorem ipsum dolor sit amet consectetur Lorem ipsum
               dolor dolor sit amet consectetur Lorem ipsum dolor
+            </p> -->
+            <p class="showcase-desc">
+              {{product1.description}}
             </p>
 
             <div class="price-box">
-              <p class="price">$150.00</p>
+              <p class="price">$ {{product1.price}}</p>
 
-              <del>$200.00</del>
+              <!-- <del>$200.00</del> -->
             </div>
 
-            <button class="add-cart-btn">add to cart</button>
+            <button [routerLink]="['/shop/product/details', product1.id]" class="add-cart-btn">show Details</button>
 
             <div class="showcase-status">
               <div class="wrapper">
                 <p>
-                  already sold: <b>20</b>
+                  min order: <b>{{product1.minimumOrderQuantity}}</b>
                 </p>
 
                 <p>
-                  available: <b>40</b>
+                  stock: <b>{{product1.stockQuantity}}</b>
                 </p>
               </div>
 
@@ -102,40 +106,49 @@
         <div class="showcase">
 
           <div class="showcase-banner">
-            <img src="assets/home/images/products/jewellery-1.jpg" alt="Rose Gold diamonds Earring" class="showcase-img">
+            <img [src]="product2.imageUrls[0]" alt="shampoo, conditioner & facewash packs" class="showcase-img">
           </div>
 
           <div class="showcase-content">
 
             <div class="showcase-rating">
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star-outline"></ion-icon>
+              <ion-icon name="star-outline"></ion-icon>
+              <ion-icon name="star-outline"></ion-icon>
               <ion-icon name="star-outline"></ion-icon>
               <ion-icon name="star-outline"></ion-icon>
             </div>
 
-            <h3 class="showcase-title">
-              <a href="#" class="showcase-title">Rose Gold diamonds Earring</a>
-            </h3>
+            <a href="#">
+              <!-- <h3 class="showcase-title">shampoo, conditioner & facewash packs</h3> -->
+              <h3 class="showcase-title">{{product2.name}}</h3>
+            </a>
 
-            <p class="showcase-desc">
+            <!-- <p class="showcase-desc">
               Lorem ipsum dolor sit amet consectetur Lorem ipsum
               dolor dolor sit amet consectetur Lorem ipsum dolor
+            </p> -->
+            <p class="showcase-desc">
+              {{product2.description}}
             </p>
 
             <div class="price-box">
-              <p class="price">$1990.00</p>
-              <del>$2000.00</del>
+              <p class="price">$ {{product2.price}}</p>
+
+              <!-- <del>$200.00</del> -->
             </div>
 
-            <button class="add-cart-btn">add to cart</button>
+            <button [routerLink]="['/shop/product/details', product2.id]" class="add-cart-btn">show Details</button>
 
             <div class="showcase-status">
               <div class="wrapper">
-                <p> already sold: <b>15</b> </p>
+                <p>
+                  min order: <b>{{product2.minimumOrderQuantity}}</b>
+                </p>
 
-                <p> available: <b>40</b> </p>
+                <p>
+                  stock: <b>{{product2.stockQuantity}}</b>
+                </p>
               </div>
 
               <div class="showcase-status-bar"></div>
@@ -143,12 +156,18 @@
 
             <div class="countdown-box">
 
-              <p class="countdown-desc">Hurry Up! Offer ends in:</p>
+              <p class="countdown-desc">
+                Hurry Up! Offer ends in:
+              </p>
 
               <div class="countdown">
+
                 <div class="countdown-content">
+
                   <p class="display-number">360</p>
+
                   <p class="display-text">Days</p>
+
                 </div>
 
                 <div class="countdown-content">
@@ -165,6 +184,7 @@
                   <p class="display-number">00</p>
                   <p class="display-text">Sec</p>
                 </div>
+
               </div>
 
             </div>

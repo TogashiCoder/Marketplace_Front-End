@@ -4,6 +4,7 @@ import { Product } from 'src/app/models/Product';
 import { AuthService } from 'src/app/services/auth.service';
 import { EditProductComponent } from '../edit-product/edit-product.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-management',
@@ -21,7 +22,8 @@ export class ProductManagementComponent {
   constructor(
     private productService: ProductService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -97,6 +99,13 @@ export class ProductManagementComponent {
   closeDialog(): void {
     this.selectedProduct = null;
   }
+
+
+
+  exploreProduct(productId: number): void {
+    this.router.navigateByUrl(`/shop/product/details/${productId}`);
+  }
+
 
 
 }

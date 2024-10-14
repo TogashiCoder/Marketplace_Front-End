@@ -17,7 +17,7 @@ export class TestComponent implements OnInit{
 
 
   ngOnInit(): void {
-     this.productService.getAllProducts().subscribe(
+     this.productService.getProductsByCategory(16).subscribe(
       (reciveData)=>{
         this.products = reciveData;
       },
@@ -27,6 +27,10 @@ export class TestComponent implements OnInit{
      )
   }
 
+
+  // getProductByCategory(){
+  //   return this.productService.getProductsByCategorynumber16(16)
+  // }
 
 
 

@@ -54,7 +54,9 @@ export class LoginComponent  implements OnInit{
           if (role === 'ADMIN' || role === 'SELLER') {
             this.router.navigate(['/dashboard']);
           } else if (role === 'BUYER') {
-            this.router.navigate(['/shop/Shop-List']);
+            // this.router.navigate(['/shop/Shop-List']);
+            this.router.navigate(['']);
+
           } else {
             console.error('Unknown role: ' + role);
           }

@@ -118,7 +118,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   private loadViewStatistics(productId: number): void {
     // Load total views
-    const totalViewsSub = this.productViewService.getDailyViews(productId,new Date).subscribe(
+    const totalViewsSub = this.productViewService.getDailyViews(productId, new Date).subscribe(
       count => {
         this.viewCount = count;
       },

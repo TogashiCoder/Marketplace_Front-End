@@ -36,6 +36,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { UtilModule } from 'src/app/util/util.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ListByCategoryComponent } from './list-by-category/list-by-category.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ShopProfilFooterComponent,
     ShopFollowersComponent,
     ListShopComponent,
+    ListByCategoryComponent,
 
   ],
   imports: [

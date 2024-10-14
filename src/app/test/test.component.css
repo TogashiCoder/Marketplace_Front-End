@@ -1,0 +1,43 @@
+/* .product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+} */
+
+.showcase {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.showcase-banner {
+  position: relative;
+  width: 100%;
+  height: 300px; /* Fixed height */
+  overflow: hidden;
+}
+
+.showcase-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This will maintain aspect ratio and cover the entire container */
+  transition: opacity 0.3s ease;
+}
+
+.showcase-banner img.hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.showcase-banner:hover img.default {
+  opacity: 0;
+}
+
+.showcase-banner:hover img.hover {
+  opacity: 1;
+}
+
+/* Rest of your existing styles */

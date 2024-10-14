@@ -56,5 +56,15 @@ export class ProductService {
       return this.http.get<Product[]>(`${this.apiUrl}/no-coupon`);
     }
 
+    // Method to get all products by category id
+    getProductsByCategory(categoryId:number):Observable<Product[]>{
+      return this.http.get<Product[]>(`${this.apiUrl}/category/${categoryId}`);
+    }
+
+    //get number of product in a category
+    getNumberOfProductIncategory(categoryId:number):Observable<number>{
+      return this.http.get<number>(`${this.apiUrl}/category/${categoryId}/count`);
+    }
+
 
 }

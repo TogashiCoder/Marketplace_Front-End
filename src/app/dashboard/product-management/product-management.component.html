@@ -20,7 +20,9 @@
       <tbody>
         <tr *ngFor="let product of products" class="bg-white">
           <td class="px-4 py-2">
-            <img [src]="product.imageUrls[0] || '/assets/placeholder.svg'" [alt]="product.name" width="50" height="50" class="rounded-md">
+            <img [src]="product.imageUrls[0] || '/assets/placeholder.svg'" [alt]="product.name" width="50" height="50" class="rounded-md"
+            (click)="exploreProduct(product.id)"
+            >
           </td>
           <td class="text-[#4a5568] px-4 py-2">{{ product.name }}</td>
           <td class="text-[#4a5568] px-4 py-2">{{ product.price | currency }}</td>
